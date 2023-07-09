@@ -2,7 +2,6 @@ package com.github.druyaned.learn_java.vol1.chapter14;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.function.BooleanSupplier;
 import javax.swing.*;
 
 public class BallsPane extends JPanel {

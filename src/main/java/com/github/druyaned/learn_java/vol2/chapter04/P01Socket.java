@@ -17,7 +17,6 @@ public class P01Socket {
     public static void run() {
         System.out.println("\n" + bold("Running P01 Socket"));
         final int timeOut = (1 << 12); // 4 sec
-        
         try (Socket socket = new Socket("www.horstmann.com", 80)) {
             socket.setSoTimeout(timeOut);
             if (socket.isConnected()) {
@@ -37,4 +36,5 @@ public class P01Socket {
             Logger.getLogger(P01Socket.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

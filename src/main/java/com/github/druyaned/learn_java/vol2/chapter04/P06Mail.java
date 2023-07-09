@@ -72,4 +72,5 @@ public class P06Mail {
         }
         System.out.println(bold("The message has been sent to") + " " + blueBold(to));
     }
+
 }

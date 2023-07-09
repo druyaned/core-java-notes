@@ -106,4 +106,5 @@ public class Sale extends Transaction {
         String anID = Integer.toString(id);
         return new String[] { aDate, aTime, aUnits, aValue, anID };
     }
+
 }

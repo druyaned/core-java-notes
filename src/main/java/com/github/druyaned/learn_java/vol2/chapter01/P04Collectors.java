@@ -107,4 +107,5 @@ public class P04Collectors {
                 .reduce(0, (len1, len2) -> len1 + len2);
         System.out.println("; total=" + totalLength);
     }
+
 }

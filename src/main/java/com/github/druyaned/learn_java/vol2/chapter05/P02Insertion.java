@@ -55,7 +55,7 @@ public class P02Insertion {
             return;
         }
         String url = "jdbc:postgresql://localhost:5432/postgres?" +
-                     "user=druyaned&password=" + pass;
+                "user=druyaned&password=" + pass;
         
         try (Connection connection = DriverManager.getConnection(url);
              Statement statement = connection.createStatement()) {
@@ -158,4 +158,5 @@ public class P02Insertion {
         }
         return insertCommands;
     }
+
 }

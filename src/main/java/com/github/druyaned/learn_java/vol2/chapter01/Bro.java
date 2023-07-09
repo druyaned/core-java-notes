@@ -54,4 +54,5 @@ public class Bro implements Comparable<Bro> {
             return authorityComparison;
         return pogremuha.compareTo(o.pogremuha);
     }
+
 }

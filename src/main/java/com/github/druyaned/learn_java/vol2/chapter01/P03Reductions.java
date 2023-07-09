@@ -66,4 +66,5 @@ public class P03Reductions {
         };
         return bros;
     }
+
 }

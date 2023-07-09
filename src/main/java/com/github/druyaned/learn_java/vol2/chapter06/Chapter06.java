@@ -4,7 +4,8 @@ import static com.github.druyaned.ConsoleColors.*;
 import com.github.druyaned.learn_java.Chapterable;
 
 /**
- * Practice implementation of the chapter 6.
+ * Practice implementation of the chapter 6 has been done
+ * in the project <a href="https://github.com/druyaned/active-recorder">ActiveRecorder</a>.
  * 
  * @author druyaned
  * @see com.github.druyaned.learn_java.vol2.App
@@ -23,4 +24,5 @@ public class Chapter06 implements Chapterable {
     
     @Override
     public boolean passed() { return false; }
+
 }

@@ -15,13 +15,12 @@ import java.security.GeneralSecurityException;
  * @see com.github.druyaned.learn_java.vol2.Volume2
  */
 public class Chapter05 implements Chapterable {
-    private static final Path passPath =
-            Volume2.getDataDirPath().resolve("chapter05").resolve("postgresql-druyaned-pass.txt");
+    private static final Path passPath = Volume2.getDataDirPath()
+            .resolve("chapter05").resolve("postgresql-druyaned-pass.txt");
     
     @Override
     public void run() {
         System.out.println(bold("Running Chapter05: DataBases"));
-        
         P01TestDB.run();
         P02Insertion.run();
         P03Prepared.run();
@@ -47,4 +46,5 @@ public class Chapter05 implements Chapterable {
     
     @Override
     public boolean passed() { return true; }
+
 }

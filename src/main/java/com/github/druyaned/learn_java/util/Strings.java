@@ -29,7 +29,7 @@ public final class Strings {
      * @see #from(int being, int size)
      * @see #fromTo(int begin, int end)
      */
-    public Strings(String[] array) {
+    public Strings(String... array) {
         if (array.length < MIN_SIZE || array.length > MAX_SIZE) {
             String m = "array.length=" + array.length +
                        " which must be in [" + MIN_SIZE + ", " + MAX_SIZE + "]";
@@ -51,7 +51,7 @@ public final class Strings {
      * @see #from(int being, int size)
      * @see #fromTo(int begin, int end)
      */
-    public Strings(String[] array, int begin, int size) {
+    public Strings(int begin, int size, String... array) {
         Objects.requireNonNull(array, "array mustn't be a null");
         if (array.length < MIN_SIZE || array.length > MAX_SIZE) {
             String m = "array.length=" + array.length +
@@ -124,8 +124,7 @@ public final class Strings {
      */
     public String get(int i) {
         if (i < 0 || i > size) {
-            String m = "i=" + i +
-                       " which must be in [" + 0 + ", " + size + ")";
+            String m = "i=" + i + " which must be in [" + 0 + ", " + size + ")";
             throw new IndexOutOfBoundsException(m);
         }
         return array[i + begin];
@@ -149,7 +148,7 @@ public final class Strings {
      * @see #getEnd()
      * @see #size()
      */
-    public Strings from(int begin, int size) { return new Strings(array, begin, size); }
+    public Strings from(int begin, int size) { return new Strings(begin, size, array); }
     
     /**
      * Returns a new wrapper for the same array from the {@code begin} and to the {@code end}.
@@ -163,7 +162,7 @@ public final class Strings {
      * @see #getEnd()
      * @see #size()
      */
-    public Strings fromTo(int begin, int end) { return new Strings(array, begin, end - begin); }
+    public Strings fromTo(int begin, int end) { return new Strings(begin, end - begin, array); }
     
     @Override
     public String toString() {
@@ -173,4 +172,5 @@ public final class Strings {
         }
         return builder.append("]").toString();
     }
+    
 }

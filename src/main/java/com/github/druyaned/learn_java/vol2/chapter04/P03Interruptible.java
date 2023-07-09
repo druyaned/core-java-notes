@@ -13,11 +13,11 @@ public class P03Interruptible {
     
     public static void run() {
         System.out.println("\n" + bold("Running Part 03 Interruptible"));
-        
         EventQueue.invokeLater(() -> {
             JFrame frame = new AppFrameP03();
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setVisible(true);
         });
     }
+
 }

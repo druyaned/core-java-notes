@@ -14,7 +14,6 @@ public class Chapter01 implements Chapterable {
     @Override
     public void run() {
         System.out.println(bold("Running Chapter01: Stream API"));
-        
         P01StreamInitialize.run();
         P02Intermediate.run();
         P03Reductions.run();
@@ -30,4 +29,5 @@ public class Chapter01 implements Chapterable {
     
     @Override
     public boolean passed() { return true; }
+
 }

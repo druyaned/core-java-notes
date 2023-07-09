@@ -14,8 +14,13 @@ public class Chapter07 implements Chapterable {
     @Override
     public void run() {
         System.out.println(bold("Running Chapter07: Internationalization"));
+        P01LocaleCurrency.run();
+        P02DateTimeFormatter.run();
+        P03CollatorNormalizer.run();
+        P04MessageFormat.run();
+        P05App.run();
     }
-
+    
     @Override
     public int getNumber() { return 7; }
     
@@ -23,5 +28,6 @@ public class Chapter07 implements Chapterable {
     public String getTitle() { return "Internationalization"; }
     
     @Override
-    public boolean passed() { return false; }
+    public boolean passed() { return true; }
+
 }

@@ -17,6 +17,7 @@ import javax.swing.*;
  * @see P03Interruptible
  */
 public class AppFrameP03 extends JFrame {
+    
     private static final int W = 640;
     private static final int H = 512;
     private static final int X = 400;
@@ -24,21 +25,17 @@ public class AppFrameP03 extends JFrame {
     private static final String APP_FONT_NAME = Font.MONOSPACED;
     private static final Font TEXT_FONT = new Font(APP_FONT_NAME, Font.PLAIN, 14);
     private static final Font BUTTON_FONT = new Font(APP_FONT_NAME, Font.BOLD, 18);
-    
     private Thread interruptThread;
     private Thread blockThread;
-    
     private final JPanel contentPane;
     private final JPanel buttonsPane;
     private final JPanel areasPane;
-    
     private final JPanel interruptPane;
     private final JPanel blockPane;
     private final JLabel interruptLabel;
     private final JLabel blockLabel;
     private final JTextArea interruptArea;
     private final JTextArea blockArea;
-    
     private final JButton startButton;
     private final JButton interruptButton;
     
@@ -50,7 +47,6 @@ public class AppFrameP03 extends JFrame {
      */
     public AppFrameP03() {
         setLocation(X, Y);
-        
         // panes
         contentPane = new JPanel(new BorderLayout());
         contentPane.setPreferredSize(new Dimension(W, H));
@@ -61,13 +57,11 @@ public class AppFrameP03 extends JFrame {
         contentPane.add(areasPane, BorderLayout.CENTER);
         interruptPane = new JPanel(new BorderLayout());
         blockPane = new JPanel(new BorderLayout());
-        
         // labels
         interruptLabel = new JLabel("Interruptible");
         blockLabel = new JLabel("Blocking");
         interruptLabel.setHorizontalAlignment(JLabel.CENTER);
         blockLabel.setHorizontalAlignment(JLabel.CENTER);
-        
         // interruptPane and blockPane
         interruptArea = new JTextArea();
         blockArea = new JTextArea();
@@ -85,7 +79,6 @@ public class AppFrameP03 extends JFrame {
         blockPane.add(blockScroll, BorderLayout.CENTER);
         areasPane.add(interruptPane);
         areasPane.add(blockPane);
-        
         // buttons
         startButton = new JButton("Start");
         interruptButton = new JButton("Interrupt");
@@ -93,7 +86,6 @@ public class AppFrameP03 extends JFrame {
         interruptButton.setEnabled(false);
         buttonsPane.add(startButton);
         buttonsPane.add(interruptButton);
-        
         // setting fonts
         interruptLabel.setFont(BUTTON_FONT);
         blockLabel.setFont(BUTTON_FONT);
@@ -101,7 +93,6 @@ public class AppFrameP03 extends JFrame {
         blockArea.setFont(TEXT_FONT);
         startButton.setFont(BUTTON_FONT);
         interruptButton.setFont(BUTTON_FONT);
-        
         // action listeners for the buttons
         startButton.addActionListener((event) -> {
             startButton.setEnabled(false);
@@ -115,7 +106,6 @@ public class AppFrameP03 extends JFrame {
             blockThread.interrupt();
             interruptButton.setEnabled(false);
         });
-        
         ServerP03.run(interruptArea, blockArea); // launching the server
         pack();
     }
@@ -123,11 +113,9 @@ public class AppFrameP03 extends JFrame {
     private void setThreads() {
         final String addr = "localhost";
         final int port = 8189;
-        
         interruptThread = new Thread(() -> {
-            try (SocketChannel interruptible =
-                    SocketChannel.open(new InetSocketAddress(addr, port))) {
-                
+            InetSocketAddress isa = new InetSocketAddress(addr, port);
+            try (SocketChannel interruptible = SocketChannel.open(isa)) {
                 ByteBuffer bufIn = ByteBuffer.allocate(SocketTaskP03.LETTER_SIZE);
                 int readCount;
                 while (!interruptThread.isInterrupted()) {
@@ -153,7 +141,6 @@ public class AppFrameP03 extends JFrame {
                 EventQueue.invokeLater(() -> interruptArea.append(message));
             }
         });
-        
         blockThread = new Thread(() -> {
             try (Socket blocking = new Socket(addr, port)) {
                 InputStream blockIn = blocking.getInputStream();
@@ -181,4 +168,5 @@ public class AppFrameP03 extends JFrame {
             }
         });
     }
+
 }

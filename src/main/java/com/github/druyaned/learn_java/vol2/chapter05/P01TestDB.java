@@ -21,22 +21,19 @@ public class P01TestDB {
     
     public static void run() {
         System.out.println("\n" + bold("Running P01 TestDB"));
-        
         // properties
         final String url;
         try {
             url = "jdbc:postgresql://localhost:5432/postgres?" +
-                  "user=druyaned&password=" + Chapter05.getPass();
+                    "user=druyaned&password=" + Chapter05.getPass();
         } catch (IOException | GeneralSecurityException ex) {
             Logger.getLogger(P01TestDB.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        
         // connecting
         try {
             try (Connection connection = DriverManager.getConnection(url);
                  Statement statement = connection.createStatement()) {
-                
                 // operators
                 final String[] updates = {
                     "CREATE TABLE Digits (Sign INTEGER, Note CHAR(16));",
@@ -45,7 +42,6 @@ public class P01TestDB {
                 };
                 final String query = "SELECT * FROM Digits";
                 final String drop = "DROP TABLE Digits";
-                
                 // executing
                 for (String update : updates) {
                     statement.executeUpdate(update);
@@ -59,10 +55,10 @@ public class P01TestDB {
                     }
                 }
                 statement.executeUpdate(drop);
-                
             }
         } catch (SQLException ex) {
             Logger.getLogger(P01TestDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

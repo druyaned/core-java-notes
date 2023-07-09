@@ -116,4 +116,5 @@ public class Purchase extends Transaction {
         String aValue = Integer.toString(getValue());
         return new String[] { aDate, aTime, aUnits, aValue, boltSupplier };
     }
+
 }

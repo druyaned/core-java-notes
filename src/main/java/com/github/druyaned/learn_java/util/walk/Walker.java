@@ -106,7 +106,6 @@ public class Walker {
                                  Path relativePath,
                                  Strings patterns,
                                  Function<Strings, Strings> replacer) throws IOException {
-        
         // creating a copy
         Path copyPath = pathOfCopy(relativePath);
         Path copyParent = copyPath.getParent();
@@ -118,23 +117,20 @@ public class Walker {
         }
         Files.copy(filePath, copyPath, StandardCopyOption.REPLACE_EXISTING); // mv file copy
         // now the copy and the file are swapped
-        
         final int PATTERNS_N = patterns.size();
         final MatchTask[] tasks = new MatchTask[threadCount];
         final Thread[] threads = new Thread[threadCount];
         long matchCount = 0;
-        
-        try (BufferedReader reader = Files.newBufferedReader(copyPath);
-             BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-            
+        try (
+                BufferedReader reader = Files.newBufferedReader(copyPath);
+                BufferedWriter writer = Files.newBufferedWriter(filePath);
+            ) {
             final int TO_READ_COUNT = PATTERNS_N + threadCount - 1;
             final String[] lines = new String[TO_READ_COUNT];
-            
             for (int i = 0; i < threadCount; ++i) {
                 threads[i] = new Thread(tasks[i] = new MatchTask(i, lines, patterns));
                 threads[i].start();
             }
-            
             while (reader.ready()) {
                 int readCount = 0; // reading a pack of lines
                 while (readCount < TO_READ_COUNT && reader.ready()) {
@@ -187,7 +183,6 @@ public class Walker {
                 }
             }
         }
-        
         return new ReplaceReport(filePath, patterns, matchCount, LocalDateTime.now(),
                 relativePath, copyPath, replacer);
     }
@@ -210,24 +205,19 @@ public class Walker {
     public MatchReport match(Path filePath,
                              Strings patterns,
                              Consumer<Strings> matcher) throws IOException {
-        
         final int PATTERNS_N = patterns.size();
         final MatchTask[] tasks = new MatchTask[threadCount];
         final Thread[] threads = new Thread[threadCount];
         long matchCount = 0;
         long readIndex = 0;
         LongStream.Builder indexesBuilder = LongStream.builder();
-        
         try (BufferedReader reader = Files.newBufferedReader(filePath)) {
-            
             final int TO_READ_COUNT = PATTERNS_N + threadCount - 1;
             final String[] lines = new String[TO_READ_COUNT];
-            
             for (int i = 0; i < threadCount; ++i) {
                 threads[i] = new Thread(tasks[i] = new MatchTask(i, lines, patterns));
                 threads[i].start();
             }
-            
             while (reader.ready()) {
                 int readCount = 0; // reading a pack of lines
                 while (readCount < TO_READ_COUNT && reader.ready()) {
@@ -276,7 +266,6 @@ public class Walker {
                 }
             }
         }
-        
         LocalDateTime makeTime = LocalDateTime.now();
         return new MatchReport(filePath, patterns, matchCount, makeTime,
                 indexesBuilder.build(), matcher);
@@ -286,6 +275,10 @@ public class Walker {
     
     // must be a relative path
     private static Path pathOfCopy(Path relativePath) throws IOException {
-        return Volume2.getDataDirPath().resolve("util").resolve("walk-copies").resolve(relativePath);
+        return Volume2.getDataDirPath()
+                .resolve("util")
+                .resolve("walk-copies")
+                .resolve(relativePath);
     }
+    
 }

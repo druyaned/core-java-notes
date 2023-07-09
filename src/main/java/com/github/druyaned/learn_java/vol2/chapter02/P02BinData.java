@@ -62,4 +62,5 @@ public class P02BinData {
         for (Employee employee : readEmployees)
             System.out.println("  " + employee);
     }
+
 }

@@ -99,4 +99,5 @@ public class P02Intermediate {
             letters.add(word.substring(i, i + 1));
         return letters.stream();
     }
+
 }

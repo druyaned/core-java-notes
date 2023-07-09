@@ -14,6 +14,9 @@ public class Chapter08 implements Chapterable {
     @Override
     public void run() {
         System.out.println(bold("Running Chapter08: Scripts and Annotations"));
+        P01ScriptingEngine.run();
+        P02Annotations.run();
+        P03ASM.run();
     }
 
     @Override
@@ -23,5 +26,6 @@ public class Chapter08 implements Chapterable {
     public String getTitle() { return "Scripts and Annotations"; }
     
     @Override
-    public boolean passed() { return false; }
+    public boolean passed() { return true; }
+
 }

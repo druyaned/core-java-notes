@@ -1,11 +1,14 @@
 package com.github.druyaned.learn_java.util.src;
 
 import static com.github.druyaned.ConsoleColors.*;
+import static com.github.druyaned.learn_java.App.APP_IN;
 import com.github.druyaned.learn_java.util.Strings;
 import com.github.druyaned.learn_java.util.walk.ReplaceReport;
 import com.github.druyaned.learn_java.util.walk.Walker;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -40,7 +43,6 @@ public class SrcLineReplacer {
     public static List<ReplaceReport> run(int volNumber,
                                           Strings patterns,
                                           Function<Strings, Strings> replacer) throws IOException {
-        
         System.out.printf("Running the %s for the %s:\n",
                           bold("SrcLineReplacer"), bold("patterns"));
         for (int i = 0; i < patterns.size(); ++i) {
@@ -80,7 +82,23 @@ public class SrcLineReplacer {
                                       purpleBold(report.getCopyPath().toString()));
                 }
             }
+            String revertChangesMessage = "Do you want to revert changes? (y/n): ";
+            System.out.print(revertChangesMessage);
+            String answer = APP_IN.nextLine().toLowerCase();
+            while (!answer.equals("y")) {
+                if (answer.equals("n")) {
+                    return reports;
+                }
+                System.out.print(revertChangesMessage);
+                answer = APP_IN.nextLine().toLowerCase();
+            } // else if the answer is yes
+            for (ReplaceReport report : reports) {
+                Path filePath = report.getFilePath();
+                Path copyPath = report.getCopyPath();
+                Files.copy(copyPath, filePath, StandardCopyOption.REPLACE_EXISTING);
+            }
         }
         return reports;
     }
+    
 }

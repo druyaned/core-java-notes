@@ -30,7 +30,6 @@ public class Password {
      */
     public static String get(Path passPath, String passFor)
             throws IOException, GeneralSecurityException {
-        
         if (!Files.exists(passPath)) {
             Path dirPath = passPath.getParent();
             if (!Files.exists(dirPath)) {
@@ -45,4 +44,7 @@ public class Password {
         String encrypted = Files.readString(passPath);
         return new Cryptographer().decrypt(encrypted);
     }
+    
+    private Password() {} // forbids to create instances
+    
 }

@@ -41,7 +41,6 @@ public class Cryptographer {
     }
     
     /**
-     * TODO
      * Returns encrypted password or <u>null</u> if the encryption failed.
      * 
      * @param plain the password to be encrypted.
@@ -49,16 +48,13 @@ public class Cryptographer {
      * @throws java.security.GeneralSecurityException TODO
      */
     public String encrypt(String plain) throws GeneralSecurityException {
-        String encrypted = null;
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         byte[] plainBytes = plain.getBytes(CHARSET);
         byte[] encryptedBytes = cipher.doFinal(plainBytes);
-        encrypted = new String(Base64.encodeBase64(encryptedBytes));
-        return encrypted;
+        return new String(Base64.encodeBase64(encryptedBytes)); // encrypted
     }
     
     /**
-     * TODO
      * Returns decrypted password or <u>null</u> if the decryption failed.
      * 
      * @param encrypted the password to be decrypted.
@@ -66,11 +62,9 @@ public class Cryptographer {
      * @throws java.security.GeneralSecurityException TODO
      */
     public String decrypt(String encrypted) throws GeneralSecurityException {
-        String plain = null;
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] encryptedBytes = Base64.decodeBase64(encrypted);
         byte[] plainBytes = cipher.doFinal(encryptedBytes);
-        plain = new String(plainBytes, CHARSET);
-        return plain;
+        return new String(plainBytes, CHARSET); // plain
     }
 }

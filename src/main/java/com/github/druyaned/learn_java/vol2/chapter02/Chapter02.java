@@ -36,4 +36,5 @@ public class Chapter02 implements Chapterable {
     
     @Override
     public boolean passed() { return true; }
+
 }

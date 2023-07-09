@@ -79,4 +79,5 @@ public class Manager extends Employee implements Serializable {
                                       ", bonus=" + bonus +
                                       ", secretary=" + secretary +
                                       "]"; }
+
 }

@@ -18,7 +18,6 @@ public class P02Server {
     
     public static void run() {
         System.out.println("\n" + bold("Running P02 ServerSocket"));
-        
         System.out.println("Open 2 new tabs in the terminal and enter \"telnet localhost 8189\"");
         try (ServerSocket server = new ServerSocket(8189)) {
             int threadCount = 0;
@@ -32,4 +31,5 @@ public class P02Server {
             Logger.getLogger(P02Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

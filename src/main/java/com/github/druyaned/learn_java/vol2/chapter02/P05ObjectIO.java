@@ -66,4 +66,5 @@ public class P05ObjectIO {
         for (int i = 0; i < readEmployees.length; ++i)
             System.out.println("  " + readEmployees[i]);
     }
+
 }

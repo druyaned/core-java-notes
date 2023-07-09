@@ -106,4 +106,5 @@ class EmployeeData {
 
         return new Employee(name, salary);
     }
+
 }

@@ -21,6 +21,7 @@ import java.util.List;
  * @author druyaned
  */
 public class SrcVisitor extends SimpleFileVisitor<Path> {
+    
     private final ArrayList<Path> filePaths;
     private final String pattern;
     private volatile boolean gotten;
@@ -83,4 +84,5 @@ public class SrcVisitor extends SimpleFileVisitor<Path> {
         }
         return FileVisitResult.SKIP_SIBLINGS;
     }
+    
 }

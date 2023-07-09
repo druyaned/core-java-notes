@@ -14,7 +14,6 @@ public class Chapter04 implements Chapterable {
     @Override
     public void run() {
         System.out.println(bold("Running Chapter04: NetWork"));
-        
         P01Socket.run();
         P02Server.run();
         P03Interruptible.run();
@@ -24,11 +23,18 @@ public class Chapter04 implements Chapterable {
     }
 
     @Override
-    public int getNumber() { return 4; }
+    public int getNumber() {
+        return 4;
+    }
     
     @Override
-    public String getTitle() { return "NetWork"; }
+    public String getTitle() {
+        return "NetWork";
+    }
     
     @Override
-    public boolean passed() { return true; }
+    public boolean passed() {
+        return true;
+    }
+
 }

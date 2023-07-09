@@ -14,20 +14,19 @@ import javax.swing.JTextArea;
  */
 public class SocketTaskP03 implements Runnable {
     
-    /** The delay between writing each letter. */
-    public static final int DELAY = (1 << 9); // 512 millis
-    
     private static final int A = (int)'а';
     private static final int YA = (int)'я';
+    private final Socket socket;
+    private final JTextArea area;
+    
+    /** The delay between writing each letter. */
+    public static final int DELAY = (1 << 9); // 512 millis
     
     /** Size of a letter in <u>bytes</u>. */
     public static final int LETTER_SIZE = 4;
     
     /** An amount of written letters. */
     public static final int LETTERS = YA - A + 1;
-    
-    private final Socket socket;
-    private final JTextArea area;
     
     /**
      * Constructs a task to write letters as bytes in the socket.
@@ -56,4 +55,5 @@ public class SocketTaskP03 implements Runnable {
             EventQueue.invokeLater(() -> area.append(exc + "\n"));
         }
     }
+
 }

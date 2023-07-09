@@ -55,4 +55,5 @@ public class Employee implements Serializable {
     public String toString() {
         return "[name=" + name + ", salary=" + salary + "]";
     }
+
 }

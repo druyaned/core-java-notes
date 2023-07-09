@@ -15,7 +15,7 @@ import java.io.UncheckedIOException;
 /**
  * Practice implementation of learning Java by the Horstmann's book volume 1.
  * <p><b>NOTE</b>: the app creates the directory
- * "&lt;USER_HOME&gt;/learn-java/vol1/" with necessary data.
+ * "&lt;USER_DIR&gt;/learn-java/vol1/" with necessary data.
  *
  * @author druyaned
  * @see com.github.druyaned.learn_java.App
@@ -24,10 +24,8 @@ public class Volume1 implements Runnable {
     
     /** Minimum number of a chapter. */
     public static final int MIN_CHAPTER = 1;
-    
     /** Maximum number of a chapter. */
     public static final int MAX_CHAPTER = 14;
-    
     private static final Path DATA_DIR_PATH;
     private static final Chapterable[] chapters = new Chapterable[MAX_CHAPTER + 1];
     
@@ -55,12 +53,10 @@ public class Volume1 implements Runnable {
     @Override
     public void run() {
         System.out.println(bold("Executing practice implementation of ") + greenBold("volume 1"));
-        
         // adding all available chapter
         for (int i = MIN_CHAPTER; i <= MAX_CHAPTER; ++i) {
             String packageName;
             String className;
-            
             if (i < 10) {
                 packageName = "com.github.druyaned.learn_java.vol1.chapter0" + i;
                 className = packageName + ".Chapter0" + i;
@@ -68,20 +64,16 @@ public class Volume1 implements Runnable {
                 packageName = "com.github.druyaned.learn_java.vol1.chapter" + i;
                 className = packageName + ".Chapter" + i;
             }
-            
             try {
                 Class<?> chapterClass = Class.forName(className);
                 chapters[i] = (Chapterable)chapterClass.getConstructor().newInstance();
-                
             } catch (ClassNotFoundException | NoSuchMethodException | SecurityException |
                      InstantiationException | IllegalAccessException | IllegalArgumentException |
                      InvocationTargetException exc) {
-                
                 String message = "An error with a chapter in volume 1";
                 Logger.getLogger(Volume1.class.getName()).log(Level.SEVERE, message, exc);
             }
         }
-        
         // printing available chapters
         System.out.println("Available chapters:");
         for (int i = MIN_CHAPTER; i <= MAX_CHAPTER; ++i) {
@@ -89,7 +81,6 @@ public class Volume1 implements Runnable {
                 System.out.printf("  Chapter #%d: %s\n", i, chapters[i].getTitle());
             }
         }
-        
         // choosing a chapter to run
         Chapterable chapter;
         System.out.print("Number of chapter to run: ");
@@ -111,4 +102,5 @@ public class Volume1 implements Runnable {
         }
         chapter.run();
     }
+    
 }

@@ -1,9 +1,7 @@
 package com.github.druyaned.learn_java.util;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 /**
@@ -12,6 +10,7 @@ import java.time.temporal.ChronoUnit;
  * @author druyaned
  */
 public class Stopwatch {
+    
     private volatile long start;
     private volatile long spent;
     
@@ -28,7 +27,9 @@ public class Stopwatch {
      * 
      * @return {@code true} if the stopwatch has been started or {@code false} if it hasn't.
      */
-    public boolean isStarted() { return start != -1; }
+    public boolean isStarted() {
+        return start != -1;
+    }
     
     /**
      * Starts counting the stopwatch while unsetting the {@link #getSpent() spent state}.
@@ -39,7 +40,6 @@ public class Stopwatch {
     public synchronized Stopwatch start() throws IllegalStateException {
         if (start != -1)
             throw new IllegalStateException("stopwatch has already been started");
-        
         start = System.currentTimeMillis();
         spent = -1;
         return this;
@@ -54,7 +54,6 @@ public class Stopwatch {
     public synchronized Stopwatch stop() throws IllegalStateException {
         if (start == -1)
             throw new IllegalStateException("stopwatch hasn't been started");
-        
         spent = System.currentTimeMillis() - start;
         start = -1;
         return this;
@@ -67,12 +66,11 @@ public class Stopwatch {
      * 
      * @return the start time or {@code null} if the stopwatch hasn't been started.
      */
-    public synchronized LocalDateTime getStart() {
+    public synchronized Instant getStart() {
         if (start == -1)
             return null;
         else
-            return LocalDateTime
-                    .ofEpochSecond(start, 0, ZoneOffset.of(ZoneId.systemDefault().getId()));
+            return Instant.ofEpochMilli(start);
     }
 
     /**
@@ -86,4 +84,5 @@ public class Stopwatch {
         else
             return Duration.of(spent, ChronoUnit.MILLIS);
     }
+    
 }

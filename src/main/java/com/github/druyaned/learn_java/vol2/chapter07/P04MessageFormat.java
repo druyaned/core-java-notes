@@ -1,0 +1,34 @@
+package com.github.druyaned.learn_java.vol2.chapter07;
+
+import static com.github.druyaned.ConsoleColors.bold;
+import java.text.MessageFormat;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+/**
+ * Part 4 of the chapter 7 to practice with the class {@code MessageFormat}.
+ * 
+ * @author druyaned
+ */
+public class P04MessageFormat {
+    
+    public static void run() {
+        System.out.println("\n" + bold("Running P04 MessageFormat"));
+        
+        Locale locale = new Locale("ru", "RU");
+        String pattern = "Сегодня, {0,date,long}, компания \"{1}\" " + // \u221e = inf
+                         "{2,choice,-\u221e<терпит убыток в {2,number,currency}|" +
+                         "0#осталась без прибыли и убытков|" +
+                         "0<довольствуется прибылью в {2,number,currency}}.";
+        MessageFormat messageFormat = new MessageFormat(pattern, locale);
+
+        Date date = GregorianCalendar.from(ZonedDateTime.now()).getTime();
+        String company = "Cocked Hat With a Feather";
+        System.out.println(messageFormat.format(new Object[] { date, company, 12345678.9 }));
+        System.out.println(messageFormat.format(new Object[] { date, company, -0.5 }));
+        System.out.println(messageFormat.format(new Object[] { date, company, 0 }));
+    }
+
+}

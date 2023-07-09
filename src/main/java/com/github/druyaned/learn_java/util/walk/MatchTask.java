@@ -8,7 +8,10 @@ import com.github.druyaned.learn_java.util.Strings;
  * @author druyaned
  */
 class MatchTask implements Runnable {
+    
     public static final int DELAY = 1; // nanos
+    
+//-Non-static---------------------------------------------------------------------------------------
     
     private final int threadNumber;
     private final String[] lines;
@@ -32,9 +35,13 @@ class MatchTask implements Runnable {
 //-Getters-and-Setters------------------------------------------------------------------------------
     
     Strings getMatchedLines() { return matchedLines; }
+    
     boolean isPaused() { return paused; }
+    
     public boolean isMatched() { return matched; }
+    
     void unsetPaused() { this.paused = false; }
+    
     void setStopped() { this.stopped = true; }
     
 //-Methods------------------------------------------------------------------------------------------
@@ -56,11 +63,12 @@ class MatchTask implements Runnable {
                         break;
                     }
                 }
-                matchedLines = new Strings(lines, threadNumber, PATTERN_N);
+                matchedLines = new Strings(threadNumber, PATTERN_N, lines);
                 paused = true;
             }
         } catch (InterruptedException exc) {
             throw new RuntimeException(exc);
         }
     }
+    
 }

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  * @see P02Server
  */
 public class SocketTaskP02 implements Runnable {
+    
     private Socket socket;
     
     /**
@@ -24,26 +25,29 @@ public class SocketTaskP02 implements Runnable {
      * 
      * @param socket a socket to handle.
      */
-    public SocketTaskP02(Socket socket) { this.socket = socket; }
+    public SocketTaskP02(Socket socket) {
+        this.socket = socket;
+    }
 
     @Override
     public void run() {
-        try (BufferedReader reader = new BufferedReader(
-                     new InputStreamReader(socket.getInputStream(), "UTF-8"));
-             PrintWriter writer = new PrintWriter(
-                     new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true)) {
-
+        try (
+                InputStreamReader isr = new InputStreamReader(socket.getInputStream(), "UTF-8");
+                BufferedReader reader = new BufferedReader(isr);
+                OutputStreamWriter osw = new OutputStreamWriter(socket.getOutputStream(), "UTF-8");
+                PrintWriter writer = new PrintWriter(osw, true)
+            ) {
            String message = "Enter an " + bold("empty line") + " to quit\n: ";
            writer.printf(message); // print-method is not auto-flushed
            for (String line = reader.readLine(); !line.isEmpty(); line = reader.readLine()) {
-               writer.println(blueBold("Entered") + ": " + line);
+               writer.println(blueBold("To upper case") + ": " + line.toUpperCase());
                writer.printf(message); // print-method is not auto-flushed
            }
            socket.shutdownInput(); // half-closed socket
            writer.println(blueBold("An input of the socket is closed") + ".");
-           
        } catch (IOException exc) {
             Logger.getLogger(SocketTaskP02.class.getName()).log(Level.SEVERE, null, exc);
        }
     }
+
 }
