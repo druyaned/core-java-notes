@@ -1,0 +1,126 @@
+# vol1_chapter_count=14
+vol1_titles=(\
+    "Introduction"\
+    "Programming Environment"\
+    "Basic Constructs"\
+    "Objects and Classes"\
+    "Inheritance"\
+    "Interfaces, Lambda and Internal Classes"\
+    "Exceptions, Assertions, and Logging"\
+    "Generics"\
+    "Collections"\
+    "Graphics"\
+    "Event Handling"\
+    "GUI"\
+    "App Deploying"\
+    "Concurrency"\
+);
+vol1_shortened_titles=(\
+    "Introduction"\
+    "ProgEnvironment"\
+    "Constructs"\
+    "ObjectsClasses"\
+    "Inheritance"\
+    "InterfacesInternalClasses"\
+    "ExceptionsLogging"\
+    "Generics"\
+    "Collections"\
+    "Graphics"\
+    "EventHandling"\
+    "GUI"\
+    "AppDeploying"\
+    "Concurrency"\
+);
+
+# vol2_chapter_count=12
+vol2_titles=(\
+    "Stream API"\
+    "Input-Output"\
+    "XML"\
+    "Networking"\
+    "Database Progamming"\
+    "Date-Time API"\
+    "Internationalization"\
+    "Scripting, Compiling, Annotations"\
+    "Security"\
+    "Advanced Swing"\
+    "Advanced AWT"\
+    "Native Methods"\
+);
+vol2_shortened_titles=(\
+    "StreamAPI"\
+    "InputOutput"\
+    "XML"\
+    "Networking"\
+    "Databases"\
+    "DateTimeAPI"\
+    "Internationalization"\
+    "ScriptCompileAnnotate"\
+    "Security"\
+    "AdvancedSwing"\
+    "AdvancedAWT"\
+    "NativeMethods"\
+);
+
+#!/bin/zsh
+vol2_titles=(\
+    "Stream API"\
+    "Input-Output"\
+    "XML"\
+    "Networking"\
+    "Database Programming"\
+    "Date-Time API"\
+    "Internationalization"\
+    "Scripting, Compiling, Annotations"\
+    "Security"\
+    "Advanced Swing"\
+    "Advanced AWT"\
+    "Native Methods"\
+);
+vol2_shortened_titles=(\
+    "StreamAPI"\
+    "InputOutput"\
+    "XML"\
+    "Networking"\
+    "Databases"\
+    "DateTimeAPI"\
+    "Internationalization"\
+    "ScriptCompileAnnotate"\
+    "Security"\
+    "AdvancedSwing"\
+    "AdvancedAWT"\
+    "NativeMethods"\
+);
+
+for i in {01..12};
+do
+    file=ch${i}/${vol2_shortened_titles[i]}.java;
+    # echo ${i}. \'${vol2_titles[i]}\' ${vol2_shortened_titles[i]}.java
+    echo "package com.github.druyaned.horstmann.corejava.vol2.ch${i};";# > $file;
+    echo "";# >> $file;
+    echo "import com.github.druyaned.horstmann.corejava.Chapter;";# >> $file;
+    echo "import java.nio.file.Path;";# >> $file;
+    echo "";# >> $file;
+    echo "/**";# >> $file;
+    echo " * Practice implementation of the Chapter#${i}: ${vol2_titles[i]}.";# >> $file;
+    echo " * @author druyaned";# >> $file;
+    echo " */";# >> $file;
+    echo "public class ${vol2_shortened_titles[i]} extends Chapter {";# >> $file;
+    echo "    ";# >> $file;
+    echo "    /**";# >> $file;
+    echo "     * Creates the Chapter#${i}: ${vol2_titles[i]}.";# >> $file;
+    echo "     * @param volDataDir the path to the volume's data-directory";# >> $file;
+    echo "     */";# >> $file;
+    echo "    public ${vol2_shortened_titles[i]}(Path volDataDir) {";# >> $file;
+    echo "        super(volDataDir, $(printf "%d" ${i}));";# >> $file;
+    echo "    }";# >> $file;
+    echo "    ";# >> $file;
+    echo "    @Override public String getTitle() {";# >> $file;
+    echo "        return \"${vol2_titles[i]}\";";# >> $file;
+    echo "    }";# >> $file;
+    echo "    ";# >> $file;
+    echo "    @Override public void run() {";# >> $file;
+    echo "    }";# >> $file;
+    echo "    ";# >> $file;
+    echo "}";# >> $file;
+done;

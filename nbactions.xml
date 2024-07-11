@@ -12,8 +12,8 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs>-ea:com.github.druyaned.learn_java.vol1.chapter07...</exec.appArgs>
-                <exec.mainClass>com.github.druyaned.learn_java.App</exec.mainClass>
+                <exec.appArgs>-enableassertions:com.github.druyaned.horstmann.corejava.vol1.ch07...</exec.appArgs>
+                <exec.mainClass>com.github.druyaned.horstmann.corejava.App</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <exec.workingdir>/Users/ed/Documents/learn/NetBeansProjects/learn_java</exec.workingdir>
             </properties>
@@ -30,8 +30,8 @@
             <properties>
                 <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.appArgs>-ea:com.github.druyaned.learn_java.vol1.chapter07...</exec.appArgs>
-                <exec.mainClass>com.github.druyaned.learn_java.App</exec.mainClass>
+                <exec.appArgs>-enableassertions:com.github.druyaned.horstmann.corejava.vol1.ch07...</exec.appArgs>
+                <exec.mainClass>com.github.druyaned.horstmann.corejava.App</exec.mainClass>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
                 <exec.workingdir>/Users/ed/Documents/learn/NetBeansProjects/learn_java</exec.workingdir>
@@ -49,9 +49,9 @@
             <properties>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-                <exec.mainClass>com.github.druyaned.learn_java.App</exec.mainClass>
+                <exec.mainClass>com.github.druyaned.horstmann.corejava.App</exec.mainClass>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs>-ea:com.github.druyaned.learn_java.vol1.chapter07...</exec.appArgs>
+                <exec.appArgs>-enableassertions:com.github.druyaned.horstmann.corejava.vol1.ch07...</exec.appArgs>
                 <exec.workingdir>/Users/ed/Documents/learn/NetBeansProjects/learn_java</exec.workingdir>
             </properties>
         </action>
