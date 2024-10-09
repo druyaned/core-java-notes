@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.druyaned</groupId>
-  <artifactId>horstmann-notes</artifactId>
+  <artifactId>core-java-notes</artifactId>
   <version>1.0</version>
 
-  <name>horstmann-notes</name>
+  <name>Core Java Notes</name>
   <url>https://github.com/druyaned</url>
 
   <properties>
@@ -44,22 +44,26 @@
       <version>1.6.2</version>
       <type>jar</type>
     </dependency>
+    
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>42.5.0</version>
     </dependency>
+    
     <dependency> <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.15</version>
     </dependency>
+    
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>7.0.0.Final</version>
       <type>jar</type>
     </dependency>
+    
     <dependency>
       <groupId>org.openjdk.nashorn</groupId>
       <artifactId>nashorn-core</artifactId>
@@ -101,6 +105,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
         </plugin>
+        
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
@@ -108,7 +113,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>com.github.druyaned.horstmann.corejava.App</mainClass>
+                <mainClass>com.github.druyaned.corejava.App</mainClass>
                 <!-- to run with dependencies -->
                 <classpathPrefix>dependency/</classpathPrefix>
               </manifest>
@@ -118,6 +123,7 @@
             </archive>
           </configuration>
         </plugin>
+        
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
@@ -148,7 +154,7 @@
                 <goal>copy-dependencies</goal>
               </goals>
               <configuration>
-                <!-- configurations -->
+                <outputDirectory>${project.build.directory}/dependency/</outputDirectory>
               </configuration>
             </execution>
           </executions>
