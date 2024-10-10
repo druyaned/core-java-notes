@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#01: Stream API.
+ * Practical implementation of the Chapter#01: Stream API.
  * @author druyaned
  */
 public class StreamAPI extends Chapter {

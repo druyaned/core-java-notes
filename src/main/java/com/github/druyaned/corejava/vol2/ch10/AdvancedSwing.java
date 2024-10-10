@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#10: Advanced Swing.
+ * Practical implementation of the Chapter#10: Advanced Swing.
  * @author druyaned
  */
 public class AdvancedSwing extends Chapter {

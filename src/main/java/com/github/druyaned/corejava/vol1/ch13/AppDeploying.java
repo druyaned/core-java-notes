@@ -5,7 +5,7 @@ import com.github.druyaned.corejava.vol1.ch13.src.TestProperties;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#13: App Deploying.
+ * Practical implementation of the Chapter#13: App Deploying.
  * @author druyaned
  */
 public class AppDeploying extends Chapter {

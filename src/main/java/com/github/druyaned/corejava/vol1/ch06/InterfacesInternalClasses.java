@@ -8,7 +8,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#06: Interfaces, Lambda and Internal Classes.
+ * Practical implementation of the Chapter#06: Interfaces, Lambda and Internal Classes.
  * @author druyaned
  */
 public class InterfacesInternalClasses extends Chapter {

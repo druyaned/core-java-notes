@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#12: GUI.
+ * Practical implementation of the Chapter#12: GUI.
  * @author druyaned
  */
 public class GUI extends Chapter {

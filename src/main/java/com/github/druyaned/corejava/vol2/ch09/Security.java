@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#09: Security.
+ * Practical implementation of the Chapter#09: Security.
  * @author druyaned
  */
 public class Security extends Chapter {

@@ -8,7 +8,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#08: Generics.
+ * Practical implementation of the Chapter#08: Generics.
  * 
  * <P>Remember the rule:<pre>
  *  &lt;? extends Type> : to read data from a generic instance

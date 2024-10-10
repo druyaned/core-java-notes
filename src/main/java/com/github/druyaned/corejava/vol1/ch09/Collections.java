@@ -13,7 +13,7 @@ import com.github.druyaned.corejava.vol1.ch09.src.rbm.RedBlackMap;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#09: Collections.
+ * Practical implementation of the Chapter#09: Collections.
  * 
  * <P><i>Collection Notes</i>:<pre>
  *       Collection                     Map

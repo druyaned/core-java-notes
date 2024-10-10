@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#04: Networking.
+ * Practical implementation of the Chapter#04: Networking.
  * @author druyaned
  */
 public class Networking extends Chapter {

@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 /**
- * Practice implementation of the Chapter#10: Graphics.
+ * Practical implementation of the Chapter#10: Graphics.
  * @author druyaned
  */
 public class Graphics extends Chapter {

@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#04: Objects and Classes.
+ * Practical implementation of the Chapter#04: Objects and Classes.
  * @author druyaned
  */
 public class ObjectsClasses extends Chapter {

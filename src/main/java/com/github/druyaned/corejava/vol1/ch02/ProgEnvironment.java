@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#02: Programming Environment.
+ * Practical implementation of the Chapter#02: Programming Environment.
  * @author druyaned
  */
 public class ProgEnvironment extends Chapter {

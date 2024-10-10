@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#07: Internationalization.
+ * Practical implementation of the Chapter#07: Internationalization.
  * @author druyaned
  */
 public class Internationalization extends Chapter {

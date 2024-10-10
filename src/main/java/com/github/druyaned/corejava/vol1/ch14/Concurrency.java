@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#14: Concurrency.
+ * Practical implementation of the Chapter#14: Concurrency.
  * @author druyaned
  */
 public class Concurrency extends Chapter {

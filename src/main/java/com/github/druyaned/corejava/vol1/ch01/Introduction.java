@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#01: Introduction.
+ * Practical implementation of the Chapter#01: Introduction.
  * @author druyaned
  */
 public class Introduction extends Chapter {

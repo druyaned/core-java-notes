@@ -11,7 +11,7 @@ import javax.crypto.spec.DESedeKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * A password cryptographer.
+ * Password cryptographer.
  * @author druyaned
  */
 public class Cryptographer {

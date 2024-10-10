@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#02: Input-Output.
+ * Practical implementation of the Chapter#02: Input-Output.
  * @author druyaned
  */
 public class InputOutput extends Chapter {

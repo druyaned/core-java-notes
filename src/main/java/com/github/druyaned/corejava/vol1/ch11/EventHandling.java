@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#11: Event Handling.
+ * Practical implementation of the Chapter#11: Event Handling.
  * @author druyaned
  */
 public class EventHandling extends Chapter {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Practice implementation of the Chapter#08: Scripting, Compiling, Annotations.
+ * Practical implementation of the Chapter#08: Scripting, Compiling, Annotations.
  * @author druyaned
  */
 public class ScriptCompileAnnotate extends Chapter {

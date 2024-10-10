@@ -16,7 +16,7 @@ import java.util.function.IntConsumer;
 import static com.github.druyaned.corejava.App.sin;
 
 /**
- * Practice implementation of Horstmann's book "Core Java" (tenth edition).
+ * Practical implementation of Horstmann's book "Core Java" (tenth edition).
  * 
  * <P>There are some {@link Volume volumes}.
  * In each volume there are some {@link Chapter chapters}.
@@ -38,7 +38,7 @@ public final class Book implements IntConsumer {
     private final List<Volume> volumes;
     
     /**
-     * Creates a new practice implementation of the
+     * Creates a new practical implementation of the
      * Horstmann's book "Core Java" (tenth edition).
      * Also creates the {@link #getDataDir() dataDir} and adds
      * all {@link Volume volumes}.

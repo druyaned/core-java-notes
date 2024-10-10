@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#07: Exceptions, Assertions, and Logging.
+ * Practical implementation of the Chapter#07: Exceptions, Assertions, and Logging.
  * 
  * <P><i>Exception Notes</i>:<pre>
  *        Throwable

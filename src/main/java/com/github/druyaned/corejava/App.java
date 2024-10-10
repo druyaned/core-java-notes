@@ -3,7 +3,7 @@ package com.github.druyaned.corejava;
 import java.util.Scanner;
 
 /**
- * App of a practice implementation of Horstmann's book
+ * App of a practical implementation of Horstmann's book
  * "Core Java" (tenth edition); the entry point of the program.
  * 
  * @author druyaned

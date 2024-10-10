@@ -13,7 +13,7 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import org.xml.sax.SAXException;
 
 /**
- * Practice implementation of the Chapter#03: XML.
+ * Practical implementation of the Chapter#03: XML.
  * @author druyaned
  */
 public class XML extends Chapter {

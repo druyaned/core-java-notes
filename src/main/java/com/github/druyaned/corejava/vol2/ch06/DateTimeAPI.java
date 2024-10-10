@@ -14,7 +14,7 @@ import java.time.format.FormatStyle;
 import java.util.TreeSet;
 
 /**
- * Practice implementation of the Chapter#06: Date-Time API.
+ * Practical implementation of the Chapter#06: Date-Time API.
  * @author druyaned
  */
 public class DateTimeAPI extends Chapter {

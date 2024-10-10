@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#03: Basic Constructs.
+ * Practical implementation of the Chapter#03: Basic Constructs.
  * @author druyaned
  */
 public class Constructs extends Chapter {

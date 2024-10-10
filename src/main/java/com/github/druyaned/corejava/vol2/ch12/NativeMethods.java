@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#12: Native Methods.
+ * Practical implementation of the Chapter#12: Native Methods.
  * @author druyaned
  */
 public class NativeMethods extends Chapter {

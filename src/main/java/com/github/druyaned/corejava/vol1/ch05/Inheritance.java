@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#05: Inheritance.
+ * Practical implementation of the Chapter#05: Inheritance.
  * @author druyaned
  */
 public class Inheritance extends Chapter {

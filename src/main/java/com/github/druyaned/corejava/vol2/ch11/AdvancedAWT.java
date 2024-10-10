@@ -4,7 +4,7 @@ import com.github.druyaned.corejava.Chapter;
 import java.nio.file.Path;
 
 /**
- * Practice implementation of the Chapter#11: Advanced AWT.
+ * Practical implementation of the Chapter#11: Advanced AWT.
  * @author druyaned
  */
 public class AdvancedAWT extends Chapter {

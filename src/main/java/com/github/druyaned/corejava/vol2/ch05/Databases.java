@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Practice implementation of the Chapter#05: Database Programming.
+ * Practical implementation of the Chapter#05: Database Programming.
  * @author druyaned
  */
 public class Databases extends Chapter {
