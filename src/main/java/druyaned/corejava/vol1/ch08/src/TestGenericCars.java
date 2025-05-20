@@ -5,17 +5,17 @@ import druyaned.corejava.vol1.ch05.ClassAnalyzer;
 
 /**
  * <pre>
- *     Pair&lt;? extends Car>
+ *     Pair&lt;? extends Car&gt;
  *        |          |
- * Pair&lt;Truck>    Pair&lt;RullyTruck>
+ * Pair&lt;Truck&gt;    Pair&lt;RullyTruck&gt;
  * 
- *   Pair&lt;? extends Truck>
+ *   Pair&lt;? extends Truck&gt;
  *        |         |
- * Pair&lt;Truck>   Pair&lt;RullyTruck>
+ * Pair&lt;Truck&gt;   Pair&lt;RullyTruck&gt;
  * 
- *        Pair&lt;? super RullyTruck>
+ *        Pair&lt;? super RullyTruck&gt;
  *        |         |           |
- * Pair&lt;Car>    Pair&lt;Truck>    Pair&lt;RullyTruck>
+ * Pair&lt;Car&gt;    Pair&lt;Truck&gt;    Pair&lt;RullyTruck&gt;
  * </pre>
  * 
  * @author druyaned

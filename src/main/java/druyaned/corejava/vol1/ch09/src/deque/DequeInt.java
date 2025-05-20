@@ -1,302 +1,179 @@
 package druyaned.corejava.vol1.ch09.src.deque;
 
-/**
- * Implementation of the {@link java.util.Deque Deque}.
- * 
- * <P><i>Important Note</i><br>
- * The structure implementation is based on the array with an immutable {@code capacity}.
- * 
- * <P><i>Example#1</i><pre>
- *  # 5 2 7 1 6 # #
- *    ^       ^
- *  head     tail
- * </pre>
- * <i>Example#2</i><pre>
- *  7 1 6 # # # 5 2
- *      ^       ^
- *    tail     head
- * </pre>
- * 
- * @author druyaned
- */
 public class DequeInt {
     
-    /** Default capacity for the constructors with no arguments. */
-    public static final int DEFAULT_CAPACITY = (1 << 15);
+    public static final int DEFAULT_CAPACITY = 16;
     
-    final int capacity;
-    final int[] values;
-    int size;
-    int head, tail;
+    private int capacity;
+    private int[] values;
+    private int size;
+    private int head, tail;
     
-    /**
-     * Creates a new empty deque.
-     * @param capacity immutable capacity of the data array
-     */
     public DequeInt(int capacity) {
-        this.capacity = capacity;
+        this.capacity = capacity > 0 ? capacity : DEFAULT_CAPACITY;
         values = new int[capacity];
         size = 0;
         head = tail = 0;
     }
     
-    /**
-     * Creates a new empty deque with {@link DEFAULT_CAPACITY default capacity}.
-     */
     public DequeInt() {
         this(DEFAULT_CAPACITY);
     }
     
-    /**
-     * Returns capacity of the deque.
-     * @return capacity of the deque
-     */
-    public int capacity() {
+    public DequeInt(int... elems) {
+        size = elems.length;
+        head = 0;
+        if (size > 0) {
+            capacity = size;
+            tail = size - 1;
+        } else {
+            capacity = DEFAULT_CAPACITY;
+            tail = 0;
+        }
+        values = new int[capacity];
+        System.arraycopy(elems, 0, values, 0, size);
+    }
+    
+    public int getCapacity() {
         return capacity;
     }
     
-    /**
-     * Returns size of the deque.
-     * @return size of the deque
-     */
-    public int size() {
+    public int getSize() {
         return size;
     }
     
-    /**
-     * Returns {@code true} if the deque is empty, otherwise - {@code false}.
-     * @return {@code true} if the deque is empty, otherwise - {@code false}
-     */
     public boolean isEmpty() {
         return size == 0;
     }
     
-    /**
-     * Returns value which is placed after the head by {@code i} positions
-     * (head's position is {@code 0}). So {@code deque.get(0)} returns head
-     * of the deque.
-     * 
-     * @param i to move forward from the head
-     * @return value which is placed after the head by {@code i} positions
-     *      (head's position is {@code 0})
-     */
+    public int getHead() {
+        return head;
+    }
+    
+    public int getTail() {
+        return tail;
+    }
+    
+    public void forEach(java.util.function.IntConsumer consumer) {
+        if (head <= tail) {
+            for (int i = head; i <= tail; i++)
+                consumer.accept(values[i]);
+        } else {
+            for (int i = head; i < capacity; i++)
+                consumer.accept(values[i]);
+            for (int i = 0; i <= tail; i++)
+                consumer.accept(values[i]);
+        }
+    }
+    
     public int get(int i) {
-        checkIndex(i);
+        throwIfBadIndex(i);
         return values[relativeIndex(i)];
     }
     
-    /**
-     * Returns head of the deque.
-     * @return head of the deque
-     */
     public int getFirst() {
-        checkIndex(0);
+        throwIfBadIndex(0);
         return values[head];
     }
     
-    /**
-     * Returns tail of the deque.
-     * @return tail of the deque
-     */
     public int getLast() {
-        checkIndex(size - 1);
+        throwIfBadIndex(size - 1);
         return values[tail];
     }
     
-    /**
-     * Returns value which is placed after the head by {@code i} positions
-     * (head's position is {@code 0}). So deque.get(0) returns the head.
-     * 
-     * @param i to shift forward from the head
-     * @return value which is placed after the head by {@code i} positions
-     *      (head's position is {@code 0})
-     */
-    /**
-     * Sets value which is placed after the head by {@code i} positions
-     * (head's position is {@code 0}). So deque.set(0, value) sets the head.
-     * 
-     * @param i to shift forward from the head
-     * @param value to be set
-     */
     public void set(int i, int value) {
-        checkIndex(i);
+        throwIfBadIndex(i);
         values[relativeIndex(i)] = value;
     }
     
-    /**
-     * Clears the whole deque. {@code size = head = tail = 0}.
-     */
     public void clear() {
+        for (int i = 0; i < size; i++)
+            values[i] = 0;
         size = head = tail = 0;
     }
     
-    /**
-     * Attaches the value to the head of the deque.
-     * @param value to be attached
-     * @return {@code true} if the attachments was succeeded, otherwise - {@code false}
-     */
-    public boolean addFirst(int value) {
-        if (size == capacity) {
-            return false;
-        }
-        if (size == 0) {
+    public void clearSimple() {
+        size = head = tail = 0;
+    }
+    
+    public void addFirst(int value) {
+        extensionOnDemand();
+        if (size == 0)
             values[head = tail = 0] = value;
-        } else if (head == 0) {
+        else if (head == 0)
             values[head = capacity - 1] = value;
-        } else {
+        else
             values[--head] = value;
-        }
         size++;
-        return true;
     }
     
-    /**
-     * Attaches the value to the tail of the deque.
-     * @param value to be attached
-     * @return {@code true} if the attachments was succeeded, otherwise - {@code false}
-     */
-    public boolean addLast(int value) {
-        if (size == capacity) {
-            return false;
-        }
-        if (size == 0) {
+    public void addLast(int value) {
+        extensionOnDemand();
+        if (size == 0)
             values[head = tail = 0] = value;
-        } else if (tail == capacity - 1) {
+        else if (tail == capacity - 1)
             values[tail = 0] = value;
-        } else {
+        else
             values[++tail] = value;
-        }
-        size++;
-        return true;
-    }
-    
-    /**
-     * Attaches the value to the head of the deque.
-     * @param value to be attached
-     */
-    public void pushFirst(int value) {
-        throwIfOversize();
-        if (size == 0) {
-            values[head = tail = 0] = value;
-        } else if (head == 0) {
-            values[head = capacity - 1] = value;
-        } else {
-            values[--head] = value;
-        }
         size++;
     }
     
-    /**
-     * Attaches the value to the tail of the deque.
-     * @param value to be attached
-     */
-    public void pushLast(int value) {
-        throwIfOversize();
-        if (size == 0) {
-            values[head = tail = 0] = value;
-        } else if (tail == capacity - 1) {
-            values[tail = 0] = value;
-        } else {
-            values[++tail] = value;
-        }
-        size++;
-    }
-    
-    /**
-     * Detaches the head of the deque.
-     * @return {@code true} if the detaching was succeeded, otherwise - {@code false}
-     */
-    public boolean removeFirst() {
-        if (size == 0) {
-            return false;
-        }
-        if (size == 1) {
-            head = tail = 0;
-        } else if (head == capacity - 1) {
-            head = 0;
-        } else {
-            head++;
-        }
-        size--;
-        return true;
-    }
-    
-    /**
-     * Detaches the tail of the deque.
-     * @return {@code true} if the detaching was succeeded, otherwise - {@code false}
-     */
-    public boolean removeLast() {
-        if (size == 0) {
-            return false;
-        }
-        if (size == 1) {
-            head = tail = 0;
-        } else if (tail == 0) {
-            tail = capacity - 1;
-        } else {
-            tail--;
-        }
-        size--;
-        return true;
-    }
-    
-    /**
-     * Detaches and returns the head of the deque.
-     * @return detached head of the deque
-     */
-    public int popFirst() {
+    public int removeFirst() {
         throwIfEmpty();
-        int first = values[head];
-        if (size == 1) {
+        int removed = values[head];
+        values[head] = 0;
+        if (size == 1)
             head = tail = 0;
-        } else if (head == capacity - 1) {
+        else if (head == capacity - 1)
             head = 0;
-        } else {
+        else
             head++;
-        }
         size--;
-        return first;
+        return removed;
     }
     
-    /**
-     * Detaches and returns the tail of the deque.
-     * @return detached tail of the deque
-     */
-    public int popLast() {
+    public int removeLast() {
         throwIfEmpty();
-        int last = values[tail];
-        if (size == 1) {
+        int removed = values[tail];
+        values[tail] = 0;
+        if (size == 1)
             head = tail = 0;
-        } else if (tail == 0) {
+        else if (tail == 0)
             tail = capacity - 1;
-        } else {
+        else
             tail--;
-        }
         size--;
-        return last;
+        return removed;
     }
     
+    private void extensionOnDemand() {
+        if (size != capacity)
+            return;
+        capacity <<= 1;
+        int[] oldValues = values;
+        values = new int[capacity];
+        if (head == 0)
+            System.arraycopy(oldValues, 0, values, 0, size);
+        else { // tail + 1 == head
+            System.arraycopy(oldValues, head, values, head + size, oldValues.length - head);
+            System.arraycopy(oldValues, 0, values, 0, head);
+            head += size;
+        }
+    }
     
     private int relativeIndex(int i) {
-        return head <= tail || i < capacity - head ? head + i : i - (capacity - head);
+        // head + i < capacity ? head + i : head + i - capacity;
+        return head < capacity - i ? head + i : i - capacity + head;
     }
     
-    private void checkIndex(int i) {
-        if (i < 0 || i >= size) {
+    private void throwIfBadIndex(int i) {
+        if (i < 0 || i >= size)
             throw new IndexOutOfBoundsException(String.format("index=%d size=%d", i, size));
-        }
-    }
-    
-    private void throwIfOversize() {
-        if (size == capacity) {
-            throw new IllegalStateException("deque is full");
-        }
     }
     
     private void throwIfEmpty() {
-        if (size == 0) {
+        if (size == 0)
             throw new IllegalStateException("the deque is empty");
-        }
     }
     
 }

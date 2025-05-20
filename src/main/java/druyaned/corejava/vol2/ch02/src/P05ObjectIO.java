@@ -25,9 +25,8 @@ public class P05ObjectIO implements Runnable {
             if (!Files.exists(filePath)) {
                 System.out.println("Creting " + blueBold(filePath.toString()) + "...");
                 Files.createFile(filePath);
-                System.out.println(blueBold(filePath.toString()) + " was " +
-                        greenBold("successfully") + " created"
-                );
+                System.out.println(blueBold(filePath.toString()) + " was "
+                        + greenBold("successfully") + " created");
             }
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);
@@ -41,35 +40,34 @@ public class P05ObjectIO implements Runnable {
         Employee[] originalEmployees = data.getEmployees();
         Employee[] readEmployees;
         // writing employees as objects
-        try (ObjectOutputStream objectOut = new ObjectOutputStream(
-                new FileOutputStream(filePath.toFile())
-        )) {
+        try (
+                ObjectOutputStream objectOut = new ObjectOutputStream(
+                        new FileOutputStream(filePath.toFile())
+                )
+        ) {
             objectOut.writeObject(originalEmployees); // also can be written by for-loop
-            System.out.println(
-                    "Array of employees was " +
-                    greenBold("successfully") + " written into " +
-                    blueBold(filePath.toString()) + "!"
-            );
+            System.out.println("Array of employees was "
+                    + greenBold("successfully") + " written into "
+                    + blueBold(filePath.toString()) + "!");
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);
         }
         // reading employees as objects
-        try (ObjectInputStream objectIn = new ObjectInputStream(
-                new FileInputStream(filePath.toFile())
-        )) {
+        try (
+                ObjectInputStream objectIn = new ObjectInputStream(
+                        new FileInputStream(filePath.toFile())
+                )
+        ) {
             readEmployees = (Employee[])objectIn.readObject();
-            System.out.println(
-                    "Array of employees was " +
-                    greenBold("successfully") + " read from " +
-                    blueBold(filePath.toString()) + "!"
-            );
+            System.out.println("Array of employees was "
+                    + greenBold("successfully") + " read from "
+                    + blueBold(filePath.toString()) + "!");
         } catch (IOException | ClassNotFoundException exc) {
             throw new RuntimeException(exc);
         }
         System.out.println("Read employees:");
-        for (int i = 0; i < readEmployees.length; ++i) {
+        for (int i = 0; i < readEmployees.length; ++i)
             System.out.printf("  %d. %s\n", i + 1, readEmployees[i]);
-        }
     }
     
 }

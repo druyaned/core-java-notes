@@ -9,8 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
@@ -29,13 +27,9 @@ public class P01StreamInitialize implements Runnable {
         Stream<BigInteger> bigIntStream;
         ArrayList<Stream> streams = new ArrayList<>();
         // closeAllStreams action
-        Runnable closeAllStreams = () -> streams.forEach((stream) -> {
-            if (stream != null) {
-                stream.close();
-            }
-        });
+        Runnable closeAllStreams = () -> streams.forEach(Stream::close);
         // making streams
-        Path textPath = Text.TEXT_PATH;
+        Path textPath = WarAndPeace.TEXT_PATH;
         try {
             // Files.lines
             streams.add(lineStream = Files.lines(textPath));
@@ -45,27 +39,23 @@ public class P01StreamInitialize implements Runnable {
             try (Stream<String> lines = Files.lines(textPath)) {
                 streamBuilder = Stream.<String>builder();
                 lines.forEach((line) -> {
-                    for (String word : line.split(WORD_REGEX)) {
+                    for (String word : line.split(WORD_REGEX))
                         streamBuilder.add(word);
-                    }
                 });
             }
             streams.add(wordStream = streamBuilder.build());
             // Pattern.splitAsStream
             String string = "This is not the best but very good string.";
-            streams.add(stringStream = Text.WORD_PATTERN.splitAsStream(string));
+            streams.add(stringStream = WarAndPeace.WORD_PATTERN.splitAsStream(string));
             // Stream.generate
             final int INT_BOUND = 10;
             Random randomGenerator = new Random();
-            streams.add(intStream = Stream.generate(
-                    () -> randomGenerator.nextInt(INT_BOUND)
-            ));
+            streams.add(intStream = Stream.generate(() ->
+                    randomGenerator.nextInt(INT_BOUND)));
             // Stream.iterate
-            streams.add(bigIntStream = Stream.iterate(
-                    ONE, (bigNum) -> bigNum.add(ONE))
-            );
+            streams.add(bigIntStream = Stream.iterate(ONE, (bigNum) -> bigNum.add(ONE)));
         } catch (IOException ex) {
-            Logger.getLogger(P01StreamInitialize.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
             closeAllStreams.run();
             return;
         }
@@ -79,33 +69,27 @@ public class P01StreamInitialize implements Runnable {
             long bigLineCount = lineStream
                     .filter((line) -> line.length() >= BIG_LINE_LENGTH)
                     .count();
-            System.out.println(
-                    blueBold("Files.lines") + ": bigLineCount=" + bigLineCount
-            );
+            System.out.println(blueBold("Files.lines")
+                    + ": bigLineCount=" + bigLineCount);
             // Stream.Builder
             long bigWordCount = wordStream
                     .filter((word) -> word.length() >= BIG_WORD_LENGTH)
                     .count();
-            System.out.println(
-                    blueBold("Stream.Builder") + ": bigWordCount=" + bigWordCount
-            );
+            System.out.println(blueBold("Stream.Builder")
+                    + ": bigWordCount=" + bigWordCount);
             // Pattern.splitAsStream
             long wordCount = stringStream.count();
-            System.out.println(
-                    blueBold("Pattern.splitAsStream") + ": wordCount=" + wordCount
-            );
+            System.out.println(blueBold("Pattern.splitAsStream")
+                    + ": wordCount=" + wordCount);
             // Stream.generate
             System.out.print(blueBold("Stream.generate") + ":");
             intStream.limit(STEP_LIM).forEach((number) -> System.out.print(" " + number));
             System.out.println();
             // Stream.iterate
             System.out.println(blueBold("Stream.iterate") + ":");
-            bigIntStream.limit(STEP_LIM).forEachOrdered(
-                    (bigInt) -> System.out.println(
-                            "  " + bold("factorial(" + bigInt + ")") +
-                            "=" + factorial(bigInt).toString()
-                    )
-            );
+            bigIntStream.limit(STEP_LIM).forEachOrdered((bigInt) ->
+                    System.out.println("  " + bold("factorial(" + bigInt + ")")
+                            + "=" + factorial(bigInt).toString()));
         } finally {
             closeAllStreams.run();
         }

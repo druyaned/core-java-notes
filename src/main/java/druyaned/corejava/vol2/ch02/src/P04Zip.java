@@ -70,9 +70,11 @@ public class P04Zip implements Runnable {
             throw new UncheckedIOException(exc);
         }
         // reading the zip-file
-        try (ZipInputStream zipIn = new ZipInputStream(
-                new FileInputStream(zipPath.toFile())
-        )) {
+        try (
+                ZipInputStream zipIn = new ZipInputStream(
+                        new FileInputStream(zipPath.toFile())
+                )
+        ) {
             zipIn.getNextEntry(); // entry is opened
             byte[] fileBytes = new byte[AVAILABLE_BYTES];
             System.out.println("Reading " + blueBold(zipPath.toString()) + "...");
@@ -82,18 +84,18 @@ public class P04Zip implements Runnable {
                     greenBold("successfully") + " read!"
             );
             Employee[] employees = new Employee[EMPLOYEE_COUNT];
-            try (DataInputStream dataIn = new DataInputStream(
-                    new ByteArrayInputStream(fileBytes)
-            )) {
-                for (int i = 0; i < EMPLOYEE_COUNT; ++i) {
+            try (
+                    DataInputStream dataIn = new DataInputStream(
+                            new ByteArrayInputStream(fileBytes)
+                    )
+            ) {
+                for (int i = 0; i < EMPLOYEE_COUNT; ++i)
                     employees[i] = data.readEmployee(dataIn);
-                }
             }
             zipIn.closeEntry(); // entry is closed
             System.out.println("Read employees:");
-            for (int i = 0; i < EMPLOYEE_COUNT; i++) {
+            for (int i = 0; i < EMPLOYEE_COUNT; i++)
                 System.out.printf("  %d. %s\n", i + 1, employees[i]);
-            }
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);
         }

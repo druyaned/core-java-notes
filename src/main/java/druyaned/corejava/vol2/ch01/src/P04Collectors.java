@@ -28,41 +28,41 @@ public class P04Collectors implements Runnable {
                 ArrayList<Bro>::addAll // merges all lists
         ); // Collectors.toList()
         System.out.print(blueBold("listOfBros") + ":");
-        listOfBros.forEach((bro) -> System.out.print(" " + bro.getPogremuha()));
+        listOfBros.forEach((bro) -> System.out.print(" " + bro));
+        System.out.println();
         // Set
         Set<Bro> setOfBros = Stream.of(bros).collect(Collectors.toSet());
-        System.out.print(blueBold("\nsetOfBros") + ":");
-        setOfBros.forEach((bro) -> System.out.print(" " + bro.getPogremuha()));
+        System.out.print(blueBold("setOfBros") + ":");
+        setOfBros.forEach((bro) -> System.out.print(" " + bro));
+        System.out.println();
         // Collectors.toCollection
-        ArrayList<Bro> arrayListOfBros = Stream.of(bros).collect(
-                Collectors.toCollection(ArrayList::new)
-        );
-        System.out.print(blueBold("\narrayListOfBros") + ":");
-        arrayListOfBros.forEach((bro) -> System.out.print(" " + bro.getPogremuha()));
+        ArrayList<Bro> arrayListOfBros = Stream.of(bros)
+                .collect(Collectors.toCollection(ArrayList<Bro>::new));
+        System.out.print(blueBold("arrayListOfBros") + ":");
+        arrayListOfBros.forEach((bro) -> System.out.print(" " + bro));
+        System.out.println();
         // Collectors.joining
         String stringOfBros = Stream.of(bros)
                 .map(Bro::getPogremuha)
                 .collect(Collectors.joining(", "));
-        System.out.println("\n" + blueBold("stringOfBros") + ": " + stringOfBros);
+        System.out.println(blueBold("stringOfBros") + ": " + stringOfBros);
         // Statistics
         IntSummaryStatistics statistics = Stream.of(bros)
                 .map(Bro::getPogremuha)
                 .collect(Collectors.summarizingInt(String::length));
-        System.out.println(
-                blueBold("Statistics of length") +
-                ": min=" + statistics.getMin() +
-                ", max=" + statistics.getMax() +
-                ", avg=" + statistics.getAverage() +
-                ", cnt=" + statistics.getCount()
-        );
+        System.out.println(blueBold("Statistics of length")
+                + ": min=" + statistics.getMin()
+                + ", max=" + statistics.getMax()
+                + ", avg=" + statistics.getAverage()
+                + ", cnt=" + statistics.getCount());
         // Collectors.toMap(Function, Finction)
-        Map<String, Bro.Authority> mapOfBros = Stream.of(bros).collect(
-                Collectors.toMap(Bro::getPogremuha, Bro::getAuthority)
-        ); // an exception can be thrown here
+        Map<String, Bro.Authority> mapOfBros = Stream.of(bros)
+                // an exception can be thrown here
+                .collect(Collectors.toMap(Bro::getPogremuha, Bro::getAuthority));
         System.out.print(blueBold("mapOfBros") + ":");
         mapOfBros.forEach((pogremuha, authority) ->
-                System.out.print(" " + pogremuha + "(" + authority + ")")
-        );
+                System.out.print(" " + pogremuha + "(" + authority + ")"));
+        System.out.println();
         // Collectors.toMap(keyMapper, valueMapper, mergeFunction)
         final String BELARUS = "Belarus";
         Map<String, List<String>> countryToLanguages = Stream.of(Locale.getAvailableLocales()).
@@ -70,27 +70,27 @@ public class P04Collectors implements Runnable {
                         Locale::getDisplayCountry,
                         (l) -> Collections.singletonList(l.getDisplayLanguage()),
                         (v1, v2) -> {
-                            List<String> list = new ArrayList<>(v1);
+                            List<String> list = new ArrayList<>(v1.size() + v2.size());
+                            list.addAll(v1);
                             list.addAll(v2);
                             return list;
                         }
                 ));
-        System.out.println("\n" + blueBold(BELARUS) + ": " + countryToLanguages.get(BELARUS));
+        System.out.println(blueBold(BELARUS) + ": " + countryToLanguages.get(BELARUS));
         // Collectors.groupingBy
         Map<String, List<Locale>> countryToLocales = Stream.of(Locale.getAvailableLocales()).
                 collect(Collectors.groupingBy(Locale::getDisplayCountry));
         System.out.println(blueBold(BELARUS) + ": " + countryToLocales.get(BELARUS));
         // Collectors.groupingBy(classifier, mapFactory, downstream)
-        Map<String, ArrayList<String>> countryToArrayList = Stream.of(
-                Locale.getAvailableLocales()
-        ).collect(Collectors.groupingBy(
-                Locale::getDisplayCountry,
-                HashMap::new,
-                Collectors.mapping(
-                        Locale::getDisplayLanguage,
-                        Collectors.toCollection(ArrayList::new)
-                )
-        ));
+        Map<String, List<String>> countryToArrayList = Stream.of(Locale.getAvailableLocales())
+                .collect(Collectors.groupingBy(
+                        Locale::getDisplayCountry,
+                        HashMap::new,
+                        Collectors.mapping(
+                                Locale::getDisplayLanguage,
+                                Collectors.toCollection(ArrayList::new)
+                        )
+                ));
         System.out.println(blueBold(BELARUS) + ": " + countryToArrayList.get(BELARUS));
         // reduce(identity, accumulator, combiner)
         int totalLengthOfBros = Stream.of(bros).reduce(

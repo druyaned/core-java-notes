@@ -1,9 +1,9 @@
 package druyaned.corejava.vol1.ch10;
 
-import druyaned.corejava.vol1.ch10.src.LikeComponent;
-import druyaned.corejava.vol1.ch10.src.GoodFrame;
-import druyaned.corejava.vol1.ch10.src.GoodComponent;
-import druyaned.corejava.vol1.ch10.src.LikeFrame;
+import druyaned.corejava.vol1.ch10.p02.LikeComponent;
+import druyaned.corejava.vol1.ch10.p01.GoodFrame;
+import druyaned.corejava.vol1.ch10.p01.GoodComponent;
+import druyaned.corejava.vol1.ch10.p02.LikeFrame;
 import druyaned.corejava.Chapter;
 import java.awt.EventQueue;
 import java.awt.GraphicsEnvironment;
@@ -37,10 +37,12 @@ public class Graphics extends Chapter {
             frame.setVisible(true);
             LikeFrame likeFrame = new LikeFrame(frame);
             LikeComponent likeComponent = new LikeComponent(
-                    likeFrame, likeFrame.getLikeImage()
+                    likeFrame,
+                    likeFrame.getLikeImage()
             );
             likeFrame.getContentPane().add(likeComponent);
             likeFrame.setVisible(true);
+            
         });
         GraphicsEnvironment locGrEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
         String[] fontFamilyNames = locGrEnv.getAvailableFontFamilyNames();

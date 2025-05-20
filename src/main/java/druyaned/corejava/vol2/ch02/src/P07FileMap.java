@@ -2,7 +2,7 @@ package druyaned.corejava.vol2.ch02.src;
 
 import static druyaned.ConsoleColors.*;
 import druyaned.corejava.util.Stopwatch;
-import druyaned.corejava.vol2.ch01.src.Text;
+import druyaned.corejava.vol2.ch01.src.WarAndPeace;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
@@ -32,7 +32,7 @@ public class P07FileMap implements Runnable {
     @Override public void run() {
         System.out.println("\n" + bold("Part 07 FileMap"));
         // declarations of the directory and files
-        Path textPath = Text.TEXT_PATH;
+        Path textPath = WarAndPeace.TEXT_PATH;
         String outDirName = "p07-file-map";
         Path outDirPath = dataDir.resolve(outDirName);
         final String[] FILE_NAMES = {
@@ -60,9 +60,7 @@ public class P07FileMap implements Runnable {
             Stopwatch stopwatch = new Stopwatch();
             // random-access
             try (
-                    RandomAccessFile randomIn = new RandomAccessFile(
-                            textPath.toFile(), "r"
-                    );
+                    RandomAccessFile randomIn = new RandomAccessFile(textPath.toFile(), "r");
                     BufferedOutputStream bufferOut = new BufferedOutputStream(
                             new FileOutputStream(filePaths[0].toFile())
                     );

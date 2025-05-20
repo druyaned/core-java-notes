@@ -1,5 +1,6 @@
 package druyaned.corejava;
 
+import static druyaned.ConsoleColors.bold;
 import static druyaned.corejava.App.sin;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -35,15 +36,13 @@ public abstract class Chapter implements Runnable {
      */
     public Chapter(Path volumeDataDir, int number) {
         this.number = number;
-        if (number < 10) {
+        if (number < 10)
             dataDir = volumeDataDir.resolve("ch0" + number);
-        } else {
+        else
             dataDir = volumeDataDir.resolve("ch" + number);
-        }
         try {
-            if (!Files.exists(dataDir)) {
+            if (!Files.exists(dataDir))
                 Files.createDirectory(dataDir);
-            }
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);
         }
@@ -71,12 +70,14 @@ public abstract class Chapter implements Runnable {
      * @see App#sin
      */
     protected final void choosePartAndRun(List<Runnable> parts) {
+        final int n = parts.size();
+        String[] partNames = new String[parts.size()];
+        for (int i = 0; i < n; i++)
+            partNames[i] = parts.get(i).getClass().getSimpleName();
         // print parts
         System.out.println("Parts of the chapter:");
-        for (int i = 0; i < parts.size(); i++) {
-            System.out.printf("  %d. %s\n",
-                    i + 1, parts.get(i).getClass().getSimpleName());
-        }
+        for (int i = 0; i < parts.size(); i++)
+            System.out.printf("  %d. %s\n", i + 1, partNames[i]);
         // validate and select part
         String wrongPartMessage = "One integer is required:"
                 + " the part number from 1 to " + parts.size();
@@ -93,6 +94,7 @@ public abstract class Chapter implements Runnable {
             return;
         }
         int index = choice - 1;
+        System.out.println("\nRunning " + bold(partNames[index]) + "...");
         parts.get(index).run();
     }
     

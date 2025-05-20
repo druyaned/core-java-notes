@@ -69,7 +69,7 @@ public class Stopwatch {
     
     /**
      * Returns the spent time or {@code null} if the stopwatch hasn't been stopped.
-     * @return the spent time or {@code null} if the stopwatch hasn't been stopped.
+     * @return the spent time or {@code null} if the stopwatch hasn't been stopped
      */
     public synchronized Duration getSpent() {
         return spent != null ? spent : null;

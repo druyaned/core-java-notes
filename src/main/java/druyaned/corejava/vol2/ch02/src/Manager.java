@@ -11,7 +11,7 @@ import java.io.Serializable;
  */
 public class Manager extends Employee implements Serializable {
     
-    private static final long serialVersionUID = 1L; // version
+    private static final long serialVersionUID = 475865099776429932L;
     
     private double bonus = 0D;
     private Employee secretary = null;

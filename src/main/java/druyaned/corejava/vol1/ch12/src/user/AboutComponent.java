@@ -1,6 +1,6 @@
 package druyaned.corejava.vol1.ch12.src.user;
 
-import druyaned.corejava.vol1.ch10.src.StringCenterer;
+import druyaned.corejava.vol1.ch10.util.StringCenterer;
 import java.awt.*;
 import javax.swing.*;
 

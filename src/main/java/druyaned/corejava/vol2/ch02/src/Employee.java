@@ -6,11 +6,15 @@ import java.io.Serializable;
  * Simple class of an employee which has a {@code name} and
  * an annual {@code salary} in Russian rubles.
  * 
+ * <P><b>Important Note</b><br>
+ * Use JDK tool 'serialver -classpath [class_path] [class_name]'
+ * to know serial version UID.
+ * 
  * @author druyaned
  */
 public class Employee implements Serializable {
     
-    private static final long serialVersionUID = 1L; // version
+    private static final long serialVersionUID = 830331297005629381L;
     
     /** Max length of the employee's name. */
     public static final int MAX_NAME_LENGTH = 64;

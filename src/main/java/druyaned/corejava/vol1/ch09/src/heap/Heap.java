@@ -1,6 +1,7 @@
 package druyaned.corejava.vol1.ch09.src.heap;
 
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 /**
  * A binary tree with a minimal element at the root.
@@ -16,24 +17,40 @@ import java.util.Comparator;
  * 
  * @param <T> the type of value maintained by the heap
  * @author druyaned
+ * @see java.util.PriorityQueue
  */
 public class Heap<T> {
     
-    private final int capacity;
+    /** Default capacity for some constructors to be set in indefinite case. */
+    public static final int DEFAULT_CAPACITY = 16;
+    
+    private int capacity;
+    private Object[] values;
     private int size;
-    private final Object[] values;
     private final Comparator<T> comp;
     
     /**
-     * Creates a new empty heap with an immutable capacity.
+     * Creates a new empty heap.
      * 
-     * @param capacity immutable capacity of the heap
+     * @param capacity capacity of the heap
      * @param comp to compare values maintained by the heap
      */
     public Heap(int capacity, Comparator<T> comp) {
-        this.capacity = capacity;
-        size = 0;
-        values = new Object[capacity];
+        this.capacity = capacity > 0 ? capacity : DEFAULT_CAPACITY;
+        this.size = 0;
+        this.values = new Object[capacity];
+        this.comp = comp;
+    }
+    
+    /**
+     * Creates a new empty heap with a {@link DEFAULT_CAPACITY default capacity}.
+     * 
+     * @param comp to compare values maintained by the heap
+     */
+    public Heap(Comparator<T> comp) {
+        this.capacity = DEFAULT_CAPACITY;
+        this.size = 0;
+        this.values = new Object[capacity];
         this.comp = comp;
     }
     
@@ -62,12 +79,22 @@ public class Heap<T> {
     }
     
     /**
-     * Returns getRoot of the heap.
-     * @return getRoot of the heap
+     * Returns root of the heap.
+     * @return root of the heap
      */
-    public T getRoot() {
-        checkIfEmpty();
+    public T root() {
+        throwIfEmpty();
         return (T)values[0];
+    }
+    
+    /**
+     * Returns an element at the position {@code i}.
+     * @param i index of the position
+     * @return element at the position {@code i}
+     */
+    public T get(int i) {
+        throwIfBadIndex(i);
+        return (T)values[i];
     }
     
     /**
@@ -80,22 +107,21 @@ public class Heap<T> {
      * </pre>
      * 
      * @param value to be inserted
-     * @return {@code true} if the insertion was succeeded, otherwise - {@code false}
      */
-    public boolean add(T value) {
-        if (size == capacity) {
-            return false;
-        }
-        values[size] = value;
+    public void add(T value) {
+        if (size == capacity)
+            extension();
         int i = size;
-        int ancestor = (i - 1) / 2;
-        while (ancestor >= 0 && comp.compare((T)values[ancestor], (T)values[i]) > 0) {
-            swap(ancestor, i);
-            i = ancestor;
-            ancestor = (i - 1) / 2;
+        while (i > 0) {
+            int parent = (i - 1) >>> 1;
+            T parentValue = (T)values[parent];
+            if (comp.compare(parentValue, value) <= 0)
+                break;
+            values[i] = parentValue;
+            i = parent;
         }
+        values[i] = value;
         size++;
-        return true;
     }
     
     /**
@@ -110,41 +136,60 @@ public class Heap<T> {
      * @return removed value
      */
     public T remove() {
-        checkIfEmpty();
+        throwIfEmpty();
         T removed = (T)values[0];
-        values[0] = values[size - 1];
-        deleteLast();
         size--;
+        T value = (T)values[size];
+        values[size] = null;
+        int i = 0, l = 1;
+        while (l < size) {
+            int r = l + 1;
+            int minChild = r < size
+                    && comp.compare((T)values[l], (T)values[r]) > 0
+                    ? r : l;
+            T minChildValue = (T)values[minChild];
+            if (comp.compare(value, minChildValue) <= 0)
+                break;
+            values[i] = minChildValue;
+            i = minChild;
+            l = (i << 1) + 1;
+        }
+        values[i] = value;
         return removed;
     }
     
-    private void deleteLast() {
-        values[size - 1] = null;
-        int i = 0;
-        int left = 1;
-        int right = 2;
-        int minChild = right < size - 1 &&
-                comp.compare((T)values[left], (T)values[right]) > 0 ? right : left;
-        while (left < size - 1 && comp.compare((T)values[i], (T)values[minChild]) > 0) {
-            swap(i, minChild);
-            i = minChild;
-            left = 2 * i + 1;
-            right = 2 * i + 2;
-            minChild = right < size - 1 &&
-                comp.compare((T)values[left], (T)values[right]) > 0 ? right : left;
-        }
+    /**
+     * Clears the whole heap. Complexity is O(n).
+     */
+    public void clear() {
+        for (int i = 0; i < size; i++)
+            values[i] = null;
+        size = 0;
     }
     
-    private void checkIfEmpty() {
-        if (size == 0) {
-            throw new IllegalStateException("the heap is empty");
-        }
+    /**
+     * Simply sets the size to zero. Complexity is O(1).
+     */
+    public void clearSimply() {
+        size = 0;
     }
     
-    private void swap(int i1, int i2) {
-        Object stock = values[i2];
-        values[i2] = values[i1];
-        values[i1] = stock;
+    // only if (size == capacity)
+    private void extension() {
+        capacity <<= 1;
+        Object[] oldValues = values;
+        values = new Object[capacity];
+        System.arraycopy(oldValues, 0, values, 0, size);
+    }
+    
+    private void throwIfEmpty() {
+        if (size == 0)
+            throw new NoSuchElementException("the heap is empty");
+    }
+    
+    private void throwIfBadIndex(int i) {
+        if (i < 0 || size <= i)
+            throw new IndexOutOfBoundsException("i=" + i + " size=" + size);
     }
     
 }

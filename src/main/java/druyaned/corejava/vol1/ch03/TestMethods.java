@@ -36,7 +36,7 @@ public class TestMethods {
             System.out.printf("s.codePointAt(%d) = %x\n", i, s.codePointAt(i));
         }
     }
-
+    
     public static void testIn() {
         System.out.println();
         System.out.print("Write smth in a line: ");
@@ -51,7 +51,7 @@ public class TestMethods {
         }
         App.sin.nextLine(); // clean up the input stream
     }
-
+    
     public static void testOut() {
         System.out.println();
         double d = 10_000.0 / 3d;
@@ -60,7 +60,7 @@ public class TestMethods {
         System.out.printf("date: %tc\n", new Date());
         System.out.printf("%tF; [%1$tT] or [%<tr]\n", new Date());
     }
-
+    
     public static void testFileIO(Path chapterDataDir) {
         System.out.println();
         Path file1Path = chapterDataDir.resolve("text-file-1.txt");
@@ -100,9 +100,9 @@ public class TestMethods {
             System.out.println("a = " + a);
         }
     }
-
+    
     private enum Size { SMALL, MEDIUM, LARGE, EXTRA_LARGE }; // to test the enum
-
+    
     public static void testControlLogic() {
         System.out.println();
         // chance to win in lottery: n*(n-1)*...*(n-k+1)/(1*2*...*k)
@@ -140,7 +140,7 @@ public class TestMethods {
         String total = builder.toString();
         System.out.println("Total output is: " + total);
     }
-
+    
     public static void testBigNumbers() {
         System.out.println();
         System.out.println("Max exponent: " + Double.MAX_EXPONENT);
@@ -153,7 +153,7 @@ public class TestMethods {
         System.out.println("MaxInteger: " + Integer.MAX_VALUE);
         System.out.println("BigInteger: " + bigInteger);
     }
-
+    
     public static void testArrays() {
         System.out.println();
         int[] a1; // a1[i] = 0; for objects: obj[i] = null

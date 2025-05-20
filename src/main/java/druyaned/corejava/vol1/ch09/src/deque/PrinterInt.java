@@ -1,12 +1,13 @@
 package druyaned.corejava.vol1.ch09.src.deque;
 
+import druyaned.corejava.vol1.ch09.src.AbstractPrinter;
 import java.io.PrintStream;
 
-/**
- * Printer of the {@link DequeInt}.
- * @author druyaned
- */
-public class PrinterInt {
+public class PrinterInt extends AbstractPrinter<DequeInt> {
+    
+    public PrinterInt(DequeInt target, String filler, PrintStream sout) {
+        super(target, filler, sout);
+    }
     
     /**
      * Prints the deque.
@@ -17,58 +18,42 @@ public class PrinterInt {
      * <i>Example#2 of view</i><pre>
      *  5 7 2 * * * 8 4
      * </pre>
-     * 
-     * @param deque to be printed
-     * @param filler fills the empty space between the values in a line
-     * @param sout to print the deque
      */
-    public static void print(DequeInt deque, String filler, PrintStream sout) {
-        checkArgs(deque, sout);
-        if (deque.isEmpty()) {
+    @Override public void print() {
+        if (target.isEmpty()) {
             sout.println("The deque is empty.");
             return;
         }
-        if (filler == null) {
-            filler = " ";
-        }
-        int maxValLen = getMaxValLen(deque);
-        printValue(deque, 0, maxValLen, filler, sout);
-        for (int i = 1; i < deque.capacity; i++) {
+        int maxValLen = getMaxValLen();
+        printValue(0, maxValLen);
+        for (int i = 1; i < target.getCapacity(); i++) {
             sout.print(filler.repeat(maxValLen));
-            printValue(deque, i, maxValLen, filler, sout);
+            printValue(i, maxValLen);
         }
         sout.println();
     }
     
-    private static void checkArgs(DequeInt deque, PrintStream sout) {
-        if (deque == null) {
-            throw new NullPointerException("the deque is null");
-        }
-        if (sout == null) {
-            throw new NullPointerException("the stream is null");
-        }
-    }
-    
-    private static int getMaxValLen(DequeInt deque) {
+    private int getMaxValLen() {
         int maxValLen = 1;
-        for (int i = 0; i < deque.size; i++) {
-            int valLen = Integer.toString(deque.get(i)).length();
-            if (maxValLen < valLen) {
+        for (int i = 0; i < target.getSize(); i++) {
+            int valLen = Integer.toString(target.get(i)).length();
+            if (maxValLen < valLen)
                 maxValLen = valLen;
-            }
         }
         return maxValLen;
     }
     
-    private static void printValue(
-            DequeInt deque, int index, int maxValLen, String filler, PrintStream sout
-    ) {
-        String valString;
-        if (contains(deque, index)) {
-            valString = Integer.toString(deque.values[index]);
-        } else {
-            valString = "*".repeat(maxValLen);
-        }
+    private void printValue(int index, int maxValLen) {
+        String valString = "*".repeat(maxValLen);
+        int head = target.getHead();
+        int tail = target.getTail();
+        int capacity = target.getCapacity();
+        if (head <= tail && head <= index && index <= tail)
+            valString = Integer.toString(target.get(index - head));
+        if (head > tail && head <= index && index < capacity)
+            valString = Integer.toString(target.get(index - head));
+        if (head > tail && 0 <= index && index <= tail)
+            valString = Integer.toString(target.get(index - head + capacity));
         int valLen = valString.length();
         int indent = (maxValLen - valLen) / 2;
         String leftIndent = filler.repeat(indent);
@@ -77,15 +62,6 @@ public class PrinterInt {
             leftIndent += filler;
         }
         sout.print(leftIndent + valString + rightIndent);
-    }
-    
-    private static boolean contains(DequeInt deque, int index) {
-        if (deque.head <= deque.tail) {
-            return deque.head <= index && index <= deque.tail;
-        } else {
-            return 0 <= index && index <= deque.tail ||
-                    deque.head <= index && index < deque.capacity;
-        }
     }
     
 }

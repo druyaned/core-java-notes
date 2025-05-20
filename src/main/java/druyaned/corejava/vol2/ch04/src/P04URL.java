@@ -48,9 +48,8 @@ public class P04URL implements Runnable {
         // getHeaderFields
         connection.getHeaderFields().forEach((key, values) -> {
             System.out.println("  " + key + ":");
-            for (String value : values) {
-                System.out.println(" ".repeat(4) + value);
-            }
+            for (String value : values)
+                System.out.println("    " + value);
         });
         // times: creation, lastModified
         long creationMillis = connection.getDate();
@@ -72,10 +71,15 @@ public class P04URL implements Runnable {
         System.out.println("  contentLength=" + contentLength);
         // first LINE_COUNT lines
         final int LINE_COUNT = 10;
+        final int MAX_LEN = 92;
         System.out.println("  First " + LINE_COUNT + " lines (or less):");
         try (Scanner cin = new Scanner(connection.getInputStream())) {
             for (int i = 1; cin.hasNextLine() && i <= LINE_COUNT; ++i) {
-                System.out.printf("%s%2d: %s\n", " ".repeat(4), i, cin.nextLine());
+                String line = cin.nextLine();
+                if (line.length() > MAX_LEN)
+                    System.out.printf("%s%2d: %s...\n", "    ", i, line.substring(0, 92));
+                else
+                    System.out.printf("%s%2d: %s\n", "    ", i, line);
             }
         }
     }

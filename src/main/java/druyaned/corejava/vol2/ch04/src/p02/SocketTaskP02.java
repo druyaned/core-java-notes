@@ -28,9 +28,9 @@ public class SocketTaskP02 implements Runnable {
     
     @Override public void run() {
         try (
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                        socket.getInputStream(), "UTF-8"
-                ));
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(socket.getInputStream(),"UTF-8")
+                );
                 PrintWriter writer = new PrintWriter(
                         new OutputStreamWriter(socket.getOutputStream(), "UTF-8"),
                         true
@@ -52,5 +52,5 @@ public class SocketTaskP02 implements Runnable {
             throw new UncheckedIOException(ex);
        }
     }
-
+    
 }

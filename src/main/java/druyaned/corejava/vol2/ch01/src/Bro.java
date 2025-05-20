@@ -39,7 +39,7 @@ public class Bro implements Comparable<Bro> {
     }
     
     @Override public String toString() {
-        return "Bro{pogremuha=" + pogremuha + ", authority=" + authority + "}";
+        return pogremuha + '(' + authority + ')';
     }
     
     @Override public int compareTo(Bro o) {

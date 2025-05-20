@@ -1,9 +1,10 @@
 package druyaned.corejava.vol1.ch11;
 
-import druyaned.corejava.vol1.ch11.src.TestAction;
-import druyaned.corejava.vol1.ch11.src.TestMouse;
-import druyaned.corejava.vol1.ch11.src.TestFrameStyle;
+import druyaned.corejava.vol1.ch11.p03.TestAction;
+import druyaned.corejava.vol1.ch11.p04.TestMouse;
+import druyaned.corejava.vol1.ch11.p02.TestFrameStyle;
 import druyaned.corejava.Chapter;
+import druyaned.corejava.vol1.ch11.p01.TestKeyPress;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class EventHandling extends Chapter {
     
     @Override public void run() {
         List<Runnable> parts = new ArrayList<>();
+        parts.add(new TestKeyPress());
         parts.add(new TestFrameStyle());
         parts.add(new TestAction());
         parts.add(new TestMouse());

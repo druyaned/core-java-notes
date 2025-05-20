@@ -1,6 +1,6 @@
 package druyaned.corejava.vol2.ch04.src;
 
-import druyaned.corejava.vol2.ch04.src.p03.AppFrameP03;
+import druyaned.corejava.vol2.ch04.src.p03.AppFrame;
 import static druyaned.ConsoleColors.*;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -14,8 +14,8 @@ public class P03Interruptible implements Runnable {
     @Override public void run() {
         System.out.println("\n" + bold("Running Part 03 Interruptible"));
         EventQueue.invokeLater(() -> {
-            JFrame frame = new AppFrameP03();
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            JFrame frame = new AppFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
         });
     }

@@ -1,16 +1,17 @@
 package druyaned.corejava.vol1.ch09;
 
-import static druyaned.corejava.App.sin;
 import druyaned.corejava.Chapter;
-import druyaned.corejava.vol1.ch09.src.TestHashMapVsTreeMap;
-import druyaned.corejava.vol1.ch09.src.TestHeap;
-import druyaned.corejava.vol1.ch09.src.TestDeque;
-import druyaned.corejava.vol1.ch09.src.TestHeapSort;
-import druyaned.corejava.vol1.ch09.src.TestLinkedList;
-import druyaned.corejava.vol1.ch09.src.TestRedBlackMap;
-import druyaned.corejava.vol1.ch09.src.TestRedBlackTree;
-import druyaned.corejava.vol1.ch09.src.rbm.RedBlackMap;
+import druyaned.corejava.vol1.ch09.src.P02HashMapVsTreeMap;
+import druyaned.corejava.vol1.ch09.src.P03HeapInteractive;
+import druyaned.corejava.vol1.ch09.src.P01DequeInteractive;
+import druyaned.corejava.vol1.ch09.src.P04HeapSort;
+import druyaned.corejava.vol1.ch09.src.P05LinkedListInteractive;
+import druyaned.corejava.vol1.ch09.src.P07RBMComparison;
+import druyaned.corejava.vol1.ch09.src.P06RBTComparison;
+import druyaned.corejava.vol1.ch09.src.P08RBTInteractive;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Practical implementation of the Chapter#09: Collections.
@@ -41,25 +42,16 @@ public class Collections extends Chapter {
     }
     
     @Override public void run() {
-        RedBlackMap<Integer, TestPair> idToTest = new RedBlackMap<>(Integer::compareTo);
-        idToTest.put(1, new TestPair("Deque", () -> TestDeque.interactiveTest()));
-        idToTest.put(2, new TestPair("HashMapVsTreeMap", () -> TestHashMapVsTreeMap.run()));
-        idToTest.put(3, new TestPair("Heap", () -> TestHeap.interactiveTest()));
-        idToTest.put(4, new TestPair("HeapSort", () -> TestHeapSort.run()));
-        idToTest.put(5, new TestPair("LinkedList", () -> TestLinkedList.interactiveTest()));
-        idToTest.put(6, new TestPair("RedBlackMap", () -> TestRedBlackMap.comparisonTest()));
-        idToTest.put(7, new TestPair("RedBlackTree", () -> TestRedBlackTree.run()));
-        System.out.println("Choose the test:");
-        idToTest.forEach(node -> {
-            System.out.printf("  %d. %s\n", node.getKey(), node.getValue().name);
-        });
-        System.out.print("input: ");
-        try {
-            idToTest.get(Integer.valueOf(sin.nextLine())).getValue().runner.run();
-        } catch(RuntimeException exc) {
-            System.out.println("Bad choice");
-            exc.printStackTrace();
-        }
+        List<Runnable> parts = new ArrayList<>();
+        parts.add(new P01DequeInteractive());
+        parts.add(new P02HashMapVsTreeMap());
+        parts.add(new P03HeapInteractive());
+        parts.add(new P04HeapSort());
+        parts.add(new P05LinkedListInteractive());
+        parts.add(new P06RBTComparison());
+        parts.add(new P07RBMComparison());
+        parts.add(new P08RBTInteractive());
+        choosePartAndRun(parts);
     }
     
 }

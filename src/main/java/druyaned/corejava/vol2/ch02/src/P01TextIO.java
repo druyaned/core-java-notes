@@ -30,27 +30,20 @@ public class P01TextIO implements Runnable {
         // playing with UTF-16 LE encoding
         System.out.println(blueBold("Playing with UTF-16 LE encoding") + ":");
         int c = 0x1D546;
-        System.out.printf(
-                "toUTF16(0x%h): %s\n",
-                c, new UTF16Unit(c).asString()
-        ); // 𝕆
-        System.out.printf(
-                "toUTF16(0x%h): %s\n",
-                c = 0x1f604, new UTF16Unit(c).asString()
-        ); // 😄
-        System.out.printf(
-                "toUTF16(0x%h): %s\n",
-                c = 0x1d6d1, new UTF16Unit(c).asString()
-        ); // 𝛑
-        System.out.printf(
-                "%s: %s (ED)\n",
-                "(toUTF16(0x1d570) + toUTF16(0x1d56F))",
-                new UTF16Unit(0x1d570).asString() + new UTF16Unit(0x1d56F).asString()
-        ); // 𝕰𝕯
+        UTF16Unit unit = new UTF16Unit(c);
+        System.out.printf("toUTF16(0x%h): %s %s\n", c, unit.asString(), unit); // 𝕆
+        unit = new UTF16Unit(c = 0x1f604);
+        System.out.printf("toUTF16(0x%h): %s %s\n", c, unit.asString(), unit); // 😄
+        unit = new UTF16Unit(c = 0x1d6d1);
+        System.out.printf("toUTF16(0x%h): %s %s\n", c, unit.asString(), unit); // 𝛑
+        UTF16Unit eUnit = new UTF16Unit(0x1d570);
+        UTF16Unit dUnit = new UTF16Unit(0x1d56F);
+        System.out.printf("(toUTF16(0x1d570) + toUTF16(0x1d56F)): ED=%s %s %s\n",
+                eUnit.asString() + dUnit.asString(), eUnit, dUnit); // 𝕰𝕯
         // checking charset name "UTF-16 LE"
-        final String charsetName = "UTF-16LE";
-        if (!Charset.isSupported(charsetName)) {
-            System.out.println(redBold(charsetName + " isn't supported"));
+        Charset utf16Le = StandardCharsets.UTF_16LE;
+        if (!Charset.isSupported(utf16Le.displayName())) {
+            System.out.println(redBold(utf16Le.displayName() + " isn't supported"));
             return;
         }
         // reding the file in UTF-16LE encoding
@@ -61,19 +54,18 @@ public class P01TextIO implements Runnable {
                 Files.createFile(filePath);
             }
             String text =
-                    """
-                    Some text that should be written in the UTF-16-LE encoding.
-                    That's the second line of the text.
-                    Also there is the third line.
-                    """;
+            """
+            Some text that should be written in the UTF-16-LE encoding.
+            That's the second line of the text.
+            Also there is the third line.
+            """;
             System.out.println("Writing " + blueBold(filePath.toString()) + "...");
-            Files.writeString(filePath, text, StandardCharsets.UTF_16LE);
+            Files.writeString(filePath, text, utf16Le);
             System.out.println("Reading " + blueBold(filePath.toString()) + "...");
-            try (Stream<String> streamOfLines = Files.lines(
-                    filePath, StandardCharsets.UTF_16LE
-            )) {
-                System.out.println("Read lines:");
-                streamOfLines.forEachOrdered(line -> System.out.println("  " + line));
+            try (Stream<String> streamOfLines = Files.lines(filePath, utf16Le)) {
+                System.out.println("Read lines:\n\"\"\"");
+                streamOfLines.forEachOrdered(System.out::println);
+                System.out.println("\"\"\"");
             }
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);

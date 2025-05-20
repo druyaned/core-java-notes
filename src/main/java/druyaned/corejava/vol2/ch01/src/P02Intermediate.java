@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 import static druyaned.ConsoleColors.bold;
-import java.io.UncheckedIOException;
 
 /**
  * Part 2 of the chapter 1 to practice with an intermediate operations.
@@ -31,25 +30,24 @@ public class P02Intermediate implements Runnable {
         // necessary declarations
         final int N = 4; // amount of streams
         final List<Stream.Builder<String>> wordsBuilders = new ArrayList<>(N);
-        for (int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i)
             wordsBuilders.add(Stream.<String>builder());
-        }
         // making stream builders
-        Path textPath = Text.TEXT_PATH;
+        Path textPath = WarAndPeace.TEXT_PATH;
         try (Stream<String> lines = Files.lines(textPath)) {
             lines.forEach((line) -> {
-                Text.WORD_PATTERN.splitAsStream(line)
+                WarAndPeace.WORD_PATTERN.splitAsStream(line)
                         .filter((word) -> !word.isEmpty())
                         .forEachOrdered((word) -> wordsBuilders.forEach((wb) -> wb.add(word)));
             });
         } catch (IOException exc) {
-            throw new UncheckedIOException(exc);
+            exc.printStackTrace();
+            return;
         }
         // making word streams
         List<Stream<String>> wordsStreams = new ArrayList<>(N);
-        for (int i = 0; i < N; ++i) {
+        for (int i = 0; i < N; ++i)
             wordsStreams.add(wordsBuilders.get(i).build());
-        }
         // limit, skip
         final int SKIP_COUNT = 28, NEXT_COUNT = 48;
         System.out.print(blueBold("First " + SKIP_COUNT + " words") + ":");
@@ -64,17 +62,17 @@ public class P02Intermediate implements Runnable {
         // flatMap, map
         System.out.print("\n" + blueBold("First " + SKIP_COUNT + " letters") + ":");
         wordsStreams.get(2)
-                .flatMap((word) -> makeLetters(word))
+                .flatMap((word) -> makeLettersAsStream(word))
                 .limit(SKIP_COUNT)
                 .forEachOrdered((letter) -> System.out.print(" [" + letter + "]"));
         System.out.print("\n" + blueBold("Letters of the 2nd word") + ":");
         wordsStreams.get(3)
                 .skip(1)
                 .limit(1)
-                .map((word) -> makeLetters(word))
-                .forEachOrdered((letterStream) -> letterStream.forEachOrdered(
-                        (letter) -> System.out.print(" [" + letter + "]")
-                ));
+                .map((word) -> makeLettersAsStream(word))
+                .forEachOrdered((letterStream) ->
+                        letterStream.forEachOrdered((letter) ->
+                                System.out.print(" [" + letter + "]")));
         // sorted, distinct, peek, toArray(generator)
         System.out.print("\n" + blueBold("Sorted distinct stream") + ":");
         Stream.of("bcd", "abc", "cbd", "bcd")
@@ -90,12 +88,11 @@ public class P02Intermediate implements Runnable {
         System.out.println(Arrays.toString(stringArray));
     }
     
-    public static Stream<Character> makeLetters(String word) {
+    public static Stream<Character> makeLettersAsStream(String word) {
         Stream.Builder<Character> builder = Stream.<Character>builder();
-        for (char ch : word.toCharArray()) {
+        for (char ch : word.toCharArray())
             builder.add(ch);
-        }
         return builder.build();
     }
-
+    
 }

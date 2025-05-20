@@ -36,7 +36,7 @@ public class Networking extends Chapter {
         parts.add(new P02Server());
         parts.add(new P03Interruptible());
         parts.add(new P04URL());
-        parts.add(new P05POST());
+        parts.add(new P05POST(getDataDir()));
         parts.add(new P06Mail(getDataDir()));
         parts.add(new P07HttpGET());
         choosePartAndRun(parts);

@@ -1,9 +1,11 @@
 package druyaned.corejava.vol2.ch04.src;
 
 import static druyaned.ConsoleColors.*;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.UncheckedIOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -13,6 +15,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +28,28 @@ import java.util.Scanner;
  * @author druyaned
  */
 public class P05POST implements Runnable {
+    
+    private final Path dataDirPath;
+    private final Path responseFilePath;
+    
+    public P05POST(Path chapterDataDir) {
+        dataDirPath = chapterDataDir.resolve("p05");
+        responseFilePath = dataDirPath.resolve("index.html");
+        try {
+            if (!Files.exists(dataDirPath)) {
+                Files.createDirectories(dataDirPath);
+                System.out.println("Directory " + blueBold(dataDirPath.toString())
+                        + " was " + greenBold("successfully") + " created!");
+            }
+            if (!Files.exists(responseFilePath)) {
+                Files.createFile(responseFilePath);
+                System.out.println("File " + blueBold(responseFilePath.toString())
+                        + " was " + greenBold("successfully") + " created!");
+            }
+        } catch (IOException exc) {
+            throw new UncheckedIOException(exc);
+        }
+    }
     
     @Override public void run() {
         // https://www.youtube.com/results?search_query=Yo - GET command example
@@ -41,19 +67,20 @@ public class P05POST implements Runnable {
             CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
             List<String> response = post(url, userAgent, redirectCount, properties);
             System.out.println("url: " + url);
-            System.out.println(blueBold("Response") + ":");
-            int digits = digitCount(response.size());
-            for (int i = 0; i < response.size(); ++i) {
-                String lineIndex = String.format("%" + digits + "d", i + 1);
-                System.out.println(purpleBold(lineIndex) + ": " + response.get(i));
+            try (BufferedWriter writer = Files.newBufferedWriter(responseFilePath)) {
+                writer.write("<!DOCTYPE html>\n");
+                for (String line : response)
+                    writer.write(line + "\n");
             }
+            System.out.println("Respone was written into "
+                    + blueBold(responseFilePath.toString()));
         } catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
         }
     }
     
     // if redirectCount == -1 => auto-redirect
-    // @param redirectCount - at the first invoke it's an limiting amount of redirections.
+    // @param redirectCount - at the first invoke it's an limiting amount of redirections
     private static List<String> post(
             URL url,
             String userAgent,
@@ -64,21 +91,18 @@ public class P05POST implements Runnable {
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        if (userAgent != null) {
+        if (userAgent != null)
             connection.setRequestProperty("User-Agent", userAgent);
-        }
-        if (redirectCount >= 0) {
+        if (redirectCount >= 0)
             connection.setInstanceFollowRedirects(false);
-        }
         try (PrintWriter writer = new PrintWriter(connection.getOutputStream())) {
             if (!properties.isEmpty()) {
                 boolean first = true;
                 for (Map.Entry<String, String> entry : properties.entrySet()) {
-                    if (first) {
+                    if (first)
                         first = false;
-                    } else {
+                    else
                         writer.print('&');
-                    }
                     String key = entry.getKey();
                     String value = entry.getValue();
                     writer.print(URLEncoder.encode(key, StandardCharsets.UTF_8));
@@ -104,42 +128,26 @@ public class P05POST implements Runnable {
                             properties
                     );
                 }
-            } // else redirectCount != 0 and there will be no morerecursion
-        } else if (redirectCount == 0) { // if more than initial redirectCount
+            } // else redirectCount != 0 and there will be no more recursion
+        } else if (redirectCount == 0) // if more than initial redirectCount
             throw new IOException("too many redirections");
-        }
         String encoding = connection.getContentEncoding();
-        if (encoding == null) {
+        if (encoding == null)
             encoding = "UTF-8";
-        }
         List<String> response = new ArrayList<>();
         try (Scanner scanner = new Scanner(connection.getInputStream(), encoding)) {
-            while (scanner.hasNext()) {
+            while (scanner.hasNext())
                 response.add(scanner.nextLine());
-            }
         } catch (IOException exc) {
             InputStream errIn = connection.getErrorStream();
-            if (errIn == null) {
+            if (errIn == null)
                 throw exc;
-            }
             try (Scanner scanner = new Scanner(errIn, encoding)) {
-                while (scanner.hasNext()) {
+                while (scanner.hasNext())
                     response.add(scanner.nextLine());
-                }
             }
         }
         return response;
-    }
-    
-    private static int digitCount(int number) {
-        if (number < 0) {
-            throw new IllegalArgumentException("the requirement must be met: number >= 0");
-        }
-        int digits = 1;
-        while ((number /= 10) > 0) {
-            ++digits;
-        }
-        return digits;
     }
     
 }

@@ -18,16 +18,16 @@ public class P01Socket implements Runnable {
         final String hostName = "www.horstmann.com";
         try (Socket socket = new Socket(hostName, 80)) {
             socket.setSoTimeout(timeOut);
-            if (socket.isConnected()) {
-                System.out.println(blueBold("socket is connected"));
-            }
+            if (socket.isConnected())
+                System.out.println(blueBold("Socket is connected"));
+            else
+                System.out.println(blueBold("Socket is NOT connected"));
             InetAddress inetAddress = InetAddress.getByName(hostName);
             InetAddress[] addresses = InetAddress.getAllByName(hostName);
             System.out.println("inetAddress=" + inetAddress);
-            System.out.print("addresses:\n ");
-            for (InetAddress address : addresses) {
+            System.out.print("addresses:");
+            for (InetAddress address : addresses)
                 System.out.print(" " + address);
-            }
             System.out.println();
             System.out.println("localHost=" + InetAddress.getLocalHost());
         } catch (IOException ex) {

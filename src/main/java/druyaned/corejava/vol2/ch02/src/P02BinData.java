@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,33 +29,35 @@ public class P02BinData implements Runnable {
         final int EMPLOYEE_COUNT = employees.length;
         Path filePath = data.getFilePath();
         // writing
-        try (DataOutputStream dataOut = new DataOutputStream(
-                new FileOutputStream(filePath.toFile())
-        )) {
+        try (
+                DataOutputStream dataOut = new DataOutputStream(
+                        new FileOutputStream(filePath.toFile())
+                )
+        ) {
             System.out.println(blueBold("Writing employees into " + filePath) + "...");
-            for (Employee employee : employees) {
+            for (Employee employee : employees)
                 data.writeEmployee(dataOut, employee);
-            }
             System.out.println(greenBold("Employees was successfully written") + "!");
         } catch (IOException exc) {
-            throw new UncheckedIOException(exc);
+            exc.printStackTrace();
+            return;
         }
         // reading
-        try (DataInputStream dataIn = new DataInputStream(
-                new FileInputStream(filePath.toFile())
-        )) {
+        try (
+                DataInputStream dataIn = new DataInputStream(
+                        new FileInputStream(filePath.toFile())
+                )
+        ) {
             List<Employee> employeeList = new ArrayList<>();
             System.out.println(blueBold("Reading employees from " + filePath) + "...");
-            while (dataIn.available() != 0) {
+            while (dataIn.available() != 0)
                 employeeList.add(data.readEmployee(dataIn));
-            }
             System.out.println(greenBold("Employees was successfully read") + "!");
             System.out.println("Employees:");
-            for (int i = 0; i < EMPLOYEE_COUNT; i++) {
+            for (int i = 0; i < EMPLOYEE_COUNT; i++)
                 System.out.printf("  %d. %s\n", i + 1, employeeList.get(i));
-            }
         } catch (IOException exc) {
-            throw new UncheckedIOException(exc);
+            exc.printStackTrace();
         }
     }
     

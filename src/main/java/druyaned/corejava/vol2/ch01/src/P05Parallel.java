@@ -2,9 +2,8 @@ package druyaned.corejava.vol2.ch01.src;
 
 import druyaned.corejava.util.Stopwatch;
 import static druyaned.ConsoleColors.*;
-import static druyaned.corejava.vol2.ch01.src.Text.WORD_PATTERN;
+import static druyaned.corejava.vol2.ch01.src.WarAndPeace.WORD_PATTERN;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -37,15 +36,11 @@ public class P05Parallel implements Runnable {
         arrayStream.forEachOrdered((s) -> System.out.print(" " + s));
         System.out.println();
         // creating streamsOfWords and listOfWords
-        Path textPath = Text.TEXT_PATH;
+        Path textPath = WarAndPeace.TEXT_PATH;
         final int STREAMS_N = 2;
         ArrayList<Stream<String>> streamsOfWords = new ArrayList<>(STREAMS_N);
         final ArrayList<String> listOfWords;
-        Runnable closeAllStreams = () -> streamsOfWords.forEach((stream) -> {
-            if (stream != null) {
-                stream.close();
-            }
-        });
+        Runnable closeAllStreams = () -> streamsOfWords.forEach(Stream::close);
         try {
             for (int i = 0; i < STREAMS_N; ++i) {
                 Stream<String> textStream = Files.lines(textPath);
@@ -70,8 +65,8 @@ public class P05Parallel implements Runnable {
                             word -> word.toLowerCase(),
                             word -> 1,
                             (Integer count1, Integer count2) -> count1 + count2,
-                            HashMap::new)
-                    );
+                            HashMap::new
+                    ));
             stopwatch.stop();
             String wordToCount = "я";
             System.out.println(
@@ -91,12 +86,10 @@ public class P05Parallel implements Runnable {
                             HashMap::new
                     ));
             stopwatch.stop();
-            System.out.println(
-                    blueBold("[____parallel-stream]") +
-                    " count of \"" + blueBold(wordToCount) + "\": " +
-                    mapOfWords.get(wordToCount) +
-                    "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)"
-            );
+            System.out.println(blueBold("[____parallel-stream]")
+                    + " count of \"" + blueBold(wordToCount) + "\": "
+                    + mapOfWords.get(wordToCount)
+                    + "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)");
             // non-parallel-stream-from-array
             stopwatch.start();
             mapOfWords = listOfWords
@@ -108,12 +101,10 @@ public class P05Parallel implements Runnable {
                             HashMap::new
                     ));
             stopwatch.stop();
-            System.out.println(
-                    blueBold("[non-parallel-stream-from-array]") +
-                    " count of \"" + blueBold(wordToCount) + "\": " +
-                    mapOfWords.get(wordToCount) +
-                    "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)"
-            );
+            System.out.println(blueBold("[non-parallel-stream-from-array]")
+                    + " count of \"" + blueBold(wordToCount) + "\": "
+                    + mapOfWords.get(wordToCount)
+                    + "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)");
             // ____parallel-stream-from-array
             stopwatch.start();
             mapOfWords = listOfWords
@@ -125,12 +116,10 @@ public class P05Parallel implements Runnable {
                             HashMap::new)
                     );
             stopwatch.stop();
-            System.out.println(
-                    blueBold("[____parallel-stream-from-array]") +
-                    " count of \"" + blueBold(wordToCount) + "\": " +
-                    mapOfWords.get(wordToCount) +
-                    "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)"
-            );
+            System.out.println(blueBold("[____parallel-stream-from-array]")
+                    + " count of \"" + blueBold(wordToCount) + "\": "
+                    + mapOfWords.get(wordToCount)
+                    + "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)");
             // non-parallel-array
             stopwatch.start();
             mapOfWords = new HashMap<>();
@@ -144,14 +133,12 @@ public class P05Parallel implements Runnable {
                 }
             }
             stopwatch.stop();
-            System.out.println(
-                    blueBold("[non-parallel-array]") +
-                    " count of \"" + blueBold(wordToCount) + "\": " +
-                    mapOfWords.get(wordToCount) +
-                    "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)"
-            );
+            System.out.println(blueBold("[non-parallel-array]")
+                    + " count of \"" + blueBold(wordToCount) + "\": "
+                    + mapOfWords.get(wordToCount)
+                    + "; spentTime=" + stopwatch.getSpent().toMillis() + "(millis)");
         } catch (IOException exc) {
-            throw new UncheckedIOException(exc);
+            exc.printStackTrace();
         } finally {
             closeAllStreams.run();
         }

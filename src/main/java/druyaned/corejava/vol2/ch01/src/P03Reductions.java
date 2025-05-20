@@ -20,7 +20,7 @@ public class P03Reductions implements Runnable {
         System.out.println("\n" + bold("Part 03 Reductions"));
         // Optional.empty, Optional.ifPresentOrElse
         Optional.empty().ifPresentOrElse(
-                (o) -> System.out.println(blueBold("Optional") + "=" + o),
+                (v) -> System.out.println(blueBold("Optional") + "=" + v),
                 () -> System.out.println(blueBold("Optional") + " is empty")
         );
         // show bros
@@ -28,23 +28,23 @@ public class P03Reductions implements Runnable {
         System.out.print(blueBold("Bros") + ":");
         Stream.of(bros)
                 .sorted(Comparator.reverseOrder())
-                .forEachOrdered((bro) -> System.out.print(" " + bro.getPogremuha()));
+                .forEachOrdered((bro) -> System.out.print(" " + bro));
         // min, max, Optional.get
         System.out.print("\n" + blueBold("Min bro") + ": ");
-        System.out.println(
-                Stream.of(bros).min(Comparator.naturalOrder()).get().getPogremuha()
-        );
+        System.out.println(Stream.of(bros)
+                .min(Comparator.naturalOrder())
+                .get());
         System.out.print(blueBold("Max bro") + ": ");
-        System.out.println(
-                Stream.of(bros).max(Comparator.naturalOrder()).get().getPogremuha()
-        );
+        System.out.println(Stream.of(bros)
+                .max(Comparator.naturalOrder())
+                .get());
         // findFirst, findAny (parallel)
         System.out.print(blueBold("Find 1st with 1st \"B\"") + ": ");
         Stream.of(bros)
                 .filter((bro) -> bro.getPogremuha().startsWith("B"))
                 .findFirst()
                 .ifPresentOrElse(
-                        (o) -> System.out.println(o.getPogremuha()),
+                        (v) -> System.out.println(v),
                         () -> System.out.println("no matches")
                 );
         System.out.print(blueBold("Find any with 1st \"G\"") + ": ");
@@ -52,14 +52,13 @@ public class P03Reductions implements Runnable {
                 .filter((bro) -> bro.getPogremuha().startsWith("G"))
                 .findAny()
                 .ifPresentOrElse(
-                        (o) -> System.out.println(o.getPogremuha()),
+                        (v) -> System.out.println(v),
                         () -> System.out.println("no matches")
                 );
         // noneMatch (anyMatch is opposite)
         System.out.print(blueBold("Any of the bros do not start with the 1st \"S\"") + ": ");
-        System.out.println(
-                Stream.of(bros).noneMatch((bro) -> bro.getPogremuha().startsWith("S"))
-        );
+        System.out.println(Stream.of(bros)
+                .noneMatch((bro) -> bro.getPogremuha().startsWith("S")));
     }
     
     public static Bro[] getBros() {

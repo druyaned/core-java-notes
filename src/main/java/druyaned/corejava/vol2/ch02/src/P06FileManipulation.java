@@ -71,26 +71,25 @@ public class P06FileManipulation implements Runnable {
                 creationInfo(tempFilePath);
             }
             // writing the file-1
-            String text = """
-                       That's the 1st line and it's great!
-                       But the 2nd line can be even better :D
-                       """;
+            String text =
+            """
+            That's the 1st line and it's great!
+            But the 2nd line can be even better :D
+            """;
             Files.write(file1Path, text.getBytes());
             writingInfo(file1Path);
             // readAllLines
             List<String> lines = Files.readAllLines(file1Path, StandardCharsets.UTF_8);
             print("Files.readAllLines", file1Path);
             System.out.println("Read lines:");
-            for (int i = 0; i < lines.size(); i++) {
+            for (int i = 0; i < lines.size(); i++)
                 System.out.printf("  %d. %s\n", i + 1, lines.get(i));
-            }
             // Files.newBufferedReader
             try (BufferedReader reader = Files.newBufferedReader(file1Path)) {
                 print("Files.newBufferedReader", file1Path);
                 System.out.println("Reading line by line:");
-                while (reader.ready()) {
+                while (reader.ready())
                     System.out.println("  " + reader.readLine());
-                }
             }
             // copy, move, size
             Path copiedFilePath = parentPath.resolve("file-1-copy");
@@ -130,7 +129,7 @@ public class P06FileManipulation implements Runnable {
                     Stream<Path> dirList = Files.list(dataDir);
                     Stream<Path> dirWalk = Files.walk(dataDir);
                     Stream<Path> dirFind = Files.find(dataDir, 4, (path, attributes) -> true);
-                    DirectoryStream<Path> dirStream = Files.newDirectoryStream(dataDir)
+                    DirectoryStream<Path> dirStream = Files.newDirectoryStream(dataDir);
             ) {
                 // list
                 System.out.println(purpleBold("dirList") + ":");
@@ -168,8 +167,8 @@ public class P06FileManipulation implements Runnable {
                 print("fileSystem.getPath(\"/\")", fileSystem.getPath("/").toUri().toString());
                 // zip: writing the file
                 String testDirName = testDirPath.getFileName().toString() + "/";
-                String movedFileName = testDirName + "/" +
-                        movedFilePath.getFileName().toString();
+                String movedFileName = testDirName + "/"
+                        + movedFilePath.getFileName().toString();
                 Files.copy(testDirPath, fileSystem.getPath(testDirName));
                 copyInfo(testDirPath, fileSystem.getPath(testDirName));
                 Files.copy(movedFilePath, fileSystem.getPath(movedFileName));

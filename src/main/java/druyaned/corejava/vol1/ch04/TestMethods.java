@@ -62,7 +62,7 @@ public class TestMethods {
             exc.printStackTrace();
         }
     }
-
+    
     public static void testBitOperations() {
         System.out.println();
         int a = 13, b = 10;
@@ -86,7 +86,7 @@ public class TestMethods {
         s = Integer.toBinaryString(~a >> 2);
         System.out.println("~a >> 2: " + s + " = " + (~a >> 2));
     }
-
+    
     public static void testLocalDate() {
         System.out.println();
         LocalDate today = LocalDate.now();

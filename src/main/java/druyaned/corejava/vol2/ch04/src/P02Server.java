@@ -24,11 +24,9 @@ public class P02Server implements Runnable {
                 "\"telnet localhost 8189\""
         );
         try (ServerSocket server = new ServerSocket(8189)) {
-            int threadCount = 0;
-            while (threadCount < 2) {
+            for (int threadCount = 0; threadCount < 2; threadCount++) {
                 Socket socket = server.accept();
                 Runnable socketTask = new SocketTaskP02(socket);
-                threadCount++;
                 new Thread(socketTask).start();
             }
         } catch (IOException ex) {

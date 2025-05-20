@@ -1,20 +1,17 @@
 package druyaned.corejava.vol1.ch14;
 
 import druyaned.corejava.Chapter;
-import druyaned.corejava.vol1.ch14.src.ball.TestBall;
-import druyaned.corejava.vol1.ch14.src.balls.TestBalls;
-import druyaned.corejava.vol1.ch14.src.banks.TestBank;
-import druyaned.corejava.vol1.ch14.src.banks.TestBankFixed;
-import druyaned.corejava.vol1.ch14.src.banks.TestBankQueued;
-import druyaned.corejava.vol1.ch14.src.banks.TestBankSynchronized;
-import druyaned.corejava.vol1.ch14.src.demo.TestDemo;
-import druyaned.corejava.vol1.ch14.src.filesearch.TestFileSearch;
-import druyaned.corejava.vol1.ch14.src.loop.TestLoop;
-import druyaned.corejava.vol1.ch14.src.loop.TestLoopInteractive;
-import druyaned.corejava.vol1.ch14.src.search.TestSearch;
-import druyaned.corejava.vol1.ch14.src.states.base.TestBaseStates;
-import druyaned.corejava.vol1.ch14.src.states.blocked.TestBlockedState;
-import druyaned.corejava.vol1.ch14.src.states.waiting.TestWaitingState;
+import druyaned.corejava.vol1.ch14.p01.TestBounce;
+import druyaned.corejava.vol1.ch14.p02.TestInterrupt;
+import druyaned.corejava.vol1.ch14.p03.TestBanks;
+import druyaned.corejava.vol1.ch14.p04.TestSynchronization;
+import druyaned.corejava.vol1.ch14.p05.TestFileSearches;
+import druyaned.corejava.vol1.ch14.p06.TestExecutors;
+import druyaned.corejava.vol1.ch14.p07.TestFutureTask;
+import druyaned.corejava.vol1.ch14.p08.TestCollections;
+import druyaned.corejava.vol1.ch14.p09.TestSynchronizer;
+import druyaned.corejava.vol1.ch14.p10.TestSwing;
+import druyaned.corejava.vol1.ch14.p11.TestLoop;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,20 +36,17 @@ public class Concurrency extends Chapter {
     
     @Override public void run() {
         List<Runnable> parts = new ArrayList<>();
-        parts.add(new TestBall());
-        parts.add(new TestBank());
-        parts.add(new TestBankFixed());
-        parts.add(new TestBankSynchronized());
-        parts.add(new TestBankQueued());
-        parts.add(new TestSearch());
-        parts.add(new TestBalls());
-        parts.add(new TestDemo());
-        parts.add(new TestFileSearch());
-        parts.add(new TestBaseStates());
-        parts.add(new TestBlockedState());
-        parts.add(new TestWaitingState());
+        parts.add(new TestBounce());
+        parts.add(new TestInterrupt());
+        parts.add(new TestBanks());
+        parts.add(new TestSynchronization());
+        parts.add(new TestFileSearches());
+        parts.add(new TestExecutors());
+        parts.add(new TestFutureTask());
+        parts.add(new TestCollections());
+        parts.add(new TestSynchronizer());
+        parts.add(new TestSwing());
         parts.add(new TestLoop());
-        parts.add(new TestLoopInteractive());
         choosePartAndRun(parts);
     }
     

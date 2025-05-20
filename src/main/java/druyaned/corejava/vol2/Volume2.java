@@ -13,6 +13,7 @@ import druyaned.corejava.vol2.ch05.Databases;
 import druyaned.corejava.vol2.ch06.DateTimeAPI;
 import druyaned.corejava.vol2.ch07.Internationalization;
 import druyaned.corejava.vol2.ch08.ScriptCompileAnnotate;
+import druyaned.corejava.vol2.ch09.Security;
 import java.nio.file.Path;
 import static java.util.Collections.unmodifiableList;
 
@@ -40,6 +41,7 @@ public class Volume2 extends Volume {
         chapters.add(new DateTimeAPI(dataDir));
         chapters.add(new Internationalization(dataDir));
         chapters.add(new ScriptCompileAnnotate(dataDir));
+        chapters.add(new Security(dataDir));
     }
     
     @Override public List<? extends Chapter> getChapters() {

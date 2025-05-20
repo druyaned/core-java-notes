@@ -72,23 +72,21 @@ public class P06Mail implements Runnable {
                 transport.connect(username, new String(plainPass));
                 transport.sendMessage(message, message.getAllRecipients());
             } catch (AuthenticationFailedException ex) {
-                char[] plainPass = console.readPassword(
-                        "Authentication failed. Rewirting the app-pass: "
-                );
+                char[] plainPass = console.readPassword("Authentication failed."
+                        + " Rewirting the app-pass: ");
                 String encryptedPass = cryptographer.encrypt(plainPass);
                 Files.writeString(passPath, encryptedPass, StandardOpenOption.WRITE);
                 console.printf(blueBold(passPath.toString()) + " was written!\n");
             }
         } catch (
-                IOException |
-                GeneralSecurityException |
-                MessagingException ex
+                IOException
+                | GeneralSecurityException
+                | MessagingException
+                exc
         ) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(exc);
         }
-        System.out.println(
-                bold("Message has been sent to") + " " + blueBold(username)
-        );
+        System.out.println(bold("Message has been sent to") + " " + blueBold(username));
     }
     
 }

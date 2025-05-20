@@ -29,18 +29,16 @@ public class FileVisitorToShow extends SimpleFileVisitor<Path> {
     @Override public FileVisitResult visitFileFailed(
             Path file, IOException ex
     ) throws IOException {
-        if (ex != null) {
+        if (ex != null)
             throw ex;
-        }
         return FileVisitResult.SKIP_SIBLINGS;
     }
     
     @Override public FileVisitResult postVisitDirectory(
             Path dir, IOException ex
     ) throws IOException {
-        if (ex != null) {
+        if (ex != null)
             throw ex;
-        }
         return FileVisitResult.CONTINUE;
     }
     
