@@ -33,7 +33,7 @@ public class FileSearchForkPool implements FileSearchable {
         entryCount = new AtomicInteger(0);
         // Fillers
         fillerService.submit(() -> {
-            fillerService.invoke(new FillerTask(root));
+            fillerService.invoke(new FillerTask(this, root));
             try {
                 queue.put(DUMMY);
             } catch (InterruptedException exc) {
@@ -43,7 +43,7 @@ public class FileSearchForkPool implements FileSearchable {
         // Extractors
         Thread[] threads = new Thread[THREAD_COUNT];
         for (int i = 0; i < THREAD_COUNT; i++)
-            (threads[i] = new Thread(new ExtractorTask())).start();
+            (threads[i] = new Thread(new ExtractorTask(this))).start();
         try {
             for (int i = 0; i < THREAD_COUNT; i++)
                 threads[i].join();
@@ -76,17 +76,19 @@ public class FileSearchForkPool implements FileSearchable {
         return target;
     }
     
-    private class FillerTask extends RecursiveTask<Object> {
-        private final Path path;
-        public FillerTask(Path path) {
+    private static class FillerTask extends RecursiveTask<Object> {
+        final Path path;
+        final FileSearchForkPool pool;
+        FillerTask(FileSearchForkPool pool, Path path) {
+            this.pool = pool;
             this.path = path;
         }
         @Override protected Object compute() {
             try {
-                queue.put(path);
+                pool.queue.put(path);
                 if (Files.isDirectory(path)) {
                     for (File file : path.toFile().listFiles())
-                        fillerService.submit(new FillerTask(file.toPath()));
+                        pool.fillerService.submit(new FillerTask(pool, file.toPath()));
                 }
                 return null;
             } catch (InterruptedException exc) {
@@ -95,16 +97,20 @@ public class FileSearchForkPool implements FileSearchable {
         }
     }
     
-    private class ExtractorTask implements Runnable {
+    private static class ExtractorTask implements Runnable {
+        final FileSearchForkPool pool;
+        public ExtractorTask(FileSearchForkPool pool) {
+            this.pool = pool;
+        }
         @Override public void run() {
             try {
                 Path taken;
-                while ( !(taken = queue.take()).equals(DUMMY) ) {
-                    entryCount.incrementAndGet();
-                    if (taken.getFileName().toString().equals(target))
-                        result.add(taken);
+                while ( !(taken = pool.queue.take()).equals(DUMMY) ) {
+                    pool.entryCount.incrementAndGet();
+                    if (taken.getFileName().toString().equals(pool.target))
+                        pool.result.add(taken);
                 }
-                queue.put(DUMMY);
+                pool.queue.put(DUMMY);
             } catch (InterruptedException exc) {
                 throw new IllegalStateException(exc);
             }
