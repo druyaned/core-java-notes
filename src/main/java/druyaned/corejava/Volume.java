@@ -1,76 +1,58 @@
 package druyaned.corejava;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Volume of {@link Book book}.
- * Represents all useful properties of a volume: {@link #getNumber() number},
- * {@link #getDataDir() dataDir} and {@link #getChapters() chapters}.
- * 
- * <P><i>Important Note</i><br>
- * Creates the {@link #getDataDir() data-directory} if it was not exist.
- * 
+ * Volume of book.
  * @author druyaned
  * @see App
  * @see Book
  * @see Chapter
+ * @see Topic
  */
-public abstract class Volume {
+public abstract class Volume implements BookItem {
     
-    protected final int number;
-    protected final Path dataDir;
+    private final Book book;
+    private final int number;
+    private final Path dataDir;
+    private final List<Chapter> chapters;
     
     /**
-     * Creates a new volume of the Horstmann's book "Core Java" (tenth edition)
-     * and the {@link #getDataDir() data-directory}.
-     * 
-     * @param bookDataDir the path to the book's {@link Book#getDataDir() data-directory}
+     * Creates a new volume of the Horstmann's book "Core Java" (tenth edition).
+     * @param book to which the volume belongs
      * @param number the number of the volume to be created
      */
-    public Volume(Path bookDataDir, int number) {
+    public Volume(Book book, int number) {
+        this.book = book;
         this.number = number;
-        dataDir = bookDataDir.resolve("vol" + number);
-        try {
-            if (!Files.exists(dataDir)) {
-                Files.createDirectory(dataDir);
-            }
-        } catch (IOException exc) {
-            throw new UncheckedIOException(exc);
-        }
+        this.dataDir = book.dataDir().resolve("vol" + number);
+        this.chapters = new ArrayList<>();
     }
     
     /**
-     * Returns the number of the volume.
-     * @return the number of the volume
+     * Returns book to which the volume belongs.
+     * @return book to which the volume belongs
      */
-    public final int getNumber() {
+    public final Book book() {
+        return book;
+    }
+    
+    @Override public final int number() {
         return number;
     }
     
-    /**
-     * Returns the path of the created data-directory which contains
-     * data-directories of each {@link Chapter chapter}.
-     * 
-     * @return the path of the created data-directory which contains
-     *      data-directories of each {@link Chapter chapter}
-     */
-    public final Path getDataDir() {
+    @Override public final Path dataDir() {
         return dataDir;
     }
     
     /**
-     * Return all {@link Chapter chapters} of the volume.
-     * 
-     * <P><i>Implementation note</i><br>
-     * Unmodifiable list is necessary.
-     * 
-     * @return all {@link Chapter chapters} of the volume
-     * @see java.util.Collections#unmodifiableList(java.util.List)
+     * Returns chapters of the volume.
+     * @return chapters of the volume
      */
-    public abstract List<? extends Chapter> getChapters();
+    public final List<Chapter> chapters() {
+        return chapters;
+    }
     
 }

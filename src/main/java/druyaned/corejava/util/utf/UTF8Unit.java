@@ -66,7 +66,7 @@ public final class UTF8Unit implements UTFUnit {
     
     /**
      * Returns the amount of bytes of the UTF-8 representation of the Unicode code point.
-     * @return the amount of bytes of the UTF-8 representation of the Unicode code point
+     * @return amount of bytes of the UTF-8 representation of the Unicode code point
      */
     public int size() {
         return size;
@@ -74,7 +74,7 @@ public final class UTF8Unit implements UTFUnit {
     
     /**
      * Returns the first byte of the UTF-8 representation of the Unicode code point.
-     * @return the first byte of the UTF-8 representation of the Unicode code point
+     * @return first byte of the UTF-8 representation of the Unicode code point
      */
     public int getByte1() {
         return byte1;
@@ -84,7 +84,7 @@ public final class UTF8Unit implements UTFUnit {
      * The second byte of the UTF-8 representation of the Unicode code point
      * or {@code -1} if the amount of bytes is less than {@code 2}.
      * 
-     * @return the second byte of the UTF-8 representation of the Unicode code point
+     * @return second byte of the UTF-8 representation of the Unicode code point
      *      or {@code -1} if the amount of bytes is less than {@code 2}
      */
     public int getByte2() {
@@ -95,7 +95,7 @@ public final class UTF8Unit implements UTFUnit {
      * The third byte of the UTF-8 representation of the Unicode code point
      * or {@code -1} if the amount of bytes is less than {@code 3}.
      * 
-     * @return the third byte of the UTF-8 representation of the Unicode code point
+     * @return third byte of the UTF-8 representation of the Unicode code point
      *      or {@code -1} if the amount of bytes is less than {@code 3}
      */
     public int getByte3() {
@@ -106,7 +106,7 @@ public final class UTF8Unit implements UTFUnit {
      * The fourth byte of the UTF-8 representation of the Unicode code point
      * or {@code -1} if the amount of bytes is less than {@code 4}.
      * 
-     * @return the fourth byte of the UTF-8 representation of the Unicode code point
+     * @return fourth byte of the UTF-8 representation of the Unicode code point
      *      or {@code -1} if the amount of bytes is less than {@code 4}
      */
     public int getByte4() {

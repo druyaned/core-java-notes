@@ -83,13 +83,13 @@ public interface UTFUnit extends Comparable<UTFUnit> {
     
     /**
      * Returns the hexadecimal value of the Unicode code point.
-     * @return the hexadecimal value of the Unicode code point
+     * @return hexadecimal value of the Unicode code point
      */
     int getHexValue();
     
     /**
      * Returns the Unicode cope point as String.
-     * @return the Unicode cope point as String
+     * @return Unicode cope point as String
      */
     String asString();
     

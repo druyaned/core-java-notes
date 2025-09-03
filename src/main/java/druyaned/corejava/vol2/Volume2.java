@@ -1,51 +1,50 @@
 package druyaned.corejava.vol2;
 
 import druyaned.corejava.App;
-import java.util.ArrayList;
-import java.util.List;
-import druyaned.corejava.Chapter;
+import druyaned.corejava.Book;
 import druyaned.corejava.Volume;
-import druyaned.corejava.vol2.ch01.StreamAPI;
-import druyaned.corejava.vol2.ch02.InputOutput;
-import druyaned.corejava.vol2.ch03.XML;
-import druyaned.corejava.vol2.ch04.Networking;
-import druyaned.corejava.vol2.ch05.Databases;
-import druyaned.corejava.vol2.ch06.DateTimeAPI;
-import druyaned.corejava.vol2.ch07.Internationalization;
-import druyaned.corejava.vol2.ch08.ScriptCompileAnnotate;
-import druyaned.corejava.vol2.ch09.Security;
-import java.nio.file.Path;
-import static java.util.Collections.unmodifiableList;
+import druyaned.corejava.vol2.ch01streamapi.C01StreamAPI;
+import druyaned.corejava.vol2.ch02io.C02InputOutput;
+import druyaned.corejava.vol2.ch03xml.C03XML;
+import druyaned.corejava.vol2.ch04network.C04Networking;
+import druyaned.corejava.vol2.ch05db.C05Databases;
+import druyaned.corejava.vol2.ch06datetime.C06DateTimeAPI;
+import druyaned.corejava.vol2.ch07international.C07Internationalization;
+import druyaned.corejava.vol2.ch08anno.C08ScriptCompileAnnotate;
+import druyaned.corejava.vol2.ch09security.C09Security;
+import druyaned.corejava.vol2.ch10swing.C10AdvancedSwing;
+import druyaned.corejava.vol2.ch11awt.C11AdvancedAWT;
+import druyaned.corejava.vol2.ch12native.C12NativeMethods;
 
 /**
  * The second volume of the book.
  * @author druyaned
  * @see App
  */
-public class Volume2 extends Volume {
-    
-    private final List<Chapter> chapters;
+public final class Volume2 extends Volume {
     
     /**
      * Creates the second volume of the book.
-     * @param bookDataDir the path to the book's data-directory
+     * @param book to which the volume belongs
      */
-    public Volume2(Path bookDataDir) {
-        super(bookDataDir, 2);
-        chapters = new ArrayList();
-        chapters.add(new StreamAPI(dataDir));
-        chapters.add(new InputOutput(dataDir));
-        chapters.add(new XML(dataDir));
-        chapters.add(new Networking(dataDir));
-        chapters.add(new Databases(dataDir));
-        chapters.add(new DateTimeAPI(dataDir));
-        chapters.add(new Internationalization(dataDir));
-        chapters.add(new ScriptCompileAnnotate(dataDir));
-        chapters.add(new Security(dataDir));
+    public Volume2(Book book) {
+        super(book, 2);
+        chapters().add(new C01StreamAPI(this));
+        chapters().add(new C02InputOutput(this));
+        chapters().add(new C03XML(this));
+        chapters().add(new C04Networking(this));
+        chapters().add(new C05Databases(this));
+        chapters().add(new C06DateTimeAPI(this));
+        chapters().add(new C07Internationalization(this));
+        chapters().add(new C08ScriptCompileAnnotate(this));
+        chapters().add(new C09Security(this));
+        chapters().add(new C10AdvancedSwing(this));
+        chapters().add(new C11AdvancedAWT(this));
+        chapters().add(new C12NativeMethods(this));
     }
     
-    @Override public List<? extends Chapter> getChapters() {
-        return unmodifiableList(chapters);
+    @Override public String title() {
+        return "Volume 2: Advanced Features";
     }
     
 }

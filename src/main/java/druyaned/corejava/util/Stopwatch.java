@@ -37,9 +37,8 @@ public class Stopwatch {
      * @throws IllegalStateException if the stopwatch has been started
      */
     public synchronized Stopwatch start() throws IllegalStateException {
-        if (start != null) {
+        if (start != null)
             throw new IllegalStateException("stopwatch has already been started");
-        }
         start = Instant.now();
         spent = null;
         return this;
@@ -51,9 +50,8 @@ public class Stopwatch {
      * @throws IllegalStateException if the stopwatch has not been started
      */
     public synchronized Stopwatch stop() throws IllegalStateException {
-        if (start == null) {
+        if (start == null)
             throw new IllegalStateException("stopwatch has not been started");
-        }
         spent = Duration.between(start, Instant.now());
         start = null;
         return this;
@@ -61,7 +59,7 @@ public class Stopwatch {
     
     /**
      * Returns the start time or {@code null} if the stopwatch hasn't been stopped.
-     * @return the start time or {@code null} if the stopwatch hasn't been started
+     * @return start time or {@code null} if the stopwatch hasn't been started
      */
     public synchronized Instant getStart() {
         return start != null ? start : null;
@@ -69,7 +67,7 @@ public class Stopwatch {
     
     /**
      * Returns the spent time or {@code null} if the stopwatch hasn't been stopped.
-     * @return the spent time or {@code null} if the stopwatch hasn't been stopped
+     * @return spent time or {@code null} if the stopwatch hasn't been stopped
      */
     public synchronized Duration getSpent() {
         return spent != null ? spent : null;

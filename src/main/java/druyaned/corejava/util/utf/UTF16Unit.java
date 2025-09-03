@@ -64,7 +64,7 @@ public final class UTF16Unit implements UTFUnit {
      * <a href="https://www.unicode.org/charts/PDF/UD800.pdf">high surrogate</a>
      * or {@code -1} if the code point is not represented as surrogates.
      * 
-     * @return the hexadecimal value of the high surrogate
+     * @return hexadecimal value of the high surrogate
      *      or {@code -1} if the code point is not represented as surrogates
      * @see UTF16Unit#hasSurrogates()
      */
@@ -80,7 +80,7 @@ public final class UTF16Unit implements UTFUnit {
      * <a href="https://www.unicode.org/charts/PDF/UDC00.pdf">low surrogate</a>
      * or {@code -1} if the code point is not represented as surrogates.
      * 
-     * @return the hexadecimal value of low surrogate
+     * @return hexadecimal value of low surrogate
      *      or {@code -1} if the code point is not represented as surrogates
      * @see UTF16Unit#hasSurrogates()
      */

@@ -1,61 +1,54 @@
 package druyaned.corejava.vol1;
 
 import druyaned.corejava.App;
-import java.util.ArrayList;
-import java.util.List;
-import druyaned.corejava.Chapter;
+import druyaned.corejava.Book;
 import druyaned.corejava.Volume;
-import druyaned.corejava.vol1.ch01.Introduction;
-import druyaned.corejava.vol1.ch02.ProgEnvironment;
-import druyaned.corejava.vol1.ch03.Constructs;
-import druyaned.corejava.vol1.ch04.ObjectsClasses;
-import druyaned.corejava.vol1.ch05.Inheritance;
-import druyaned.corejava.vol1.ch06.InterfacesInternalClasses;
-import druyaned.corejava.vol1.ch07.ExceptionsLogging;
-import druyaned.corejava.vol1.ch08.Generics;
-import druyaned.corejava.vol1.ch09.Collections;
-import druyaned.corejava.vol1.ch10.Graphics;
-import druyaned.corejava.vol1.ch11.EventHandling;
-import druyaned.corejava.vol1.ch12.GUI;
-import druyaned.corejava.vol1.ch13.AppDeploying;
-import druyaned.corejava.vol1.ch14.Concurrency;
-import java.nio.file.Path;
-import static java.util.Collections.unmodifiableList;
+import druyaned.corejava.vol1.ch01intro.C01Introduction;
+import druyaned.corejava.vol1.ch02progenv.C02ProgEnvironment;
+import druyaned.corejava.vol1.ch03constr.C03Constructs;
+import druyaned.corejava.vol1.ch04obj.C04ObjectsClasses;
+import druyaned.corejava.vol1.ch05inherit.C05Inheritance;
+import druyaned.corejava.vol1.ch06interface.C06InterfacesInternalClasses;
+import druyaned.corejava.vol1.ch07exclog.C07ExceptionsLogging;
+import druyaned.corejava.vol1.ch08generics.C08Generics;
+import druyaned.corejava.vol1.ch09collections.C09Collections;
+import druyaned.corejava.vol1.ch10graphics.C10Graphics;
+import druyaned.corejava.vol1.ch11events.C11EventHandling;
+import druyaned.corejava.vol1.ch12gui.C12GUI;
+import druyaned.corejava.vol1.ch13deploy.C13AppDeploying;
+import druyaned.corejava.vol1.ch14concurrency.C14Concurrency;
 
 /**
  * The first volume of the book.
  * @author druyaned
  * @see App
  */
-public class Volume1 extends Volume {
-    
-    private final List<Chapter> chapters;
+public final class Volume1 extends Volume {
     
     /**
      * Creates the first volume of the book.
-     * @param bookDataDir the path to the book's data-directory
+     * @param book to which the volume belongs
      */
-    public Volume1(Path bookDataDir) {
-        super(bookDataDir, 1);
-        chapters = new ArrayList();
-        chapters.add(new Introduction(dataDir));
-        chapters.add(new ProgEnvironment(dataDir));
-        chapters.add(new Constructs(dataDir));
-        chapters.add(new ObjectsClasses(dataDir));
-        chapters.add(new Inheritance(dataDir));
-        chapters.add(new InterfacesInternalClasses(dataDir));
-        chapters.add(new ExceptionsLogging(dataDir));
-        chapters.add(new Generics(dataDir));
-        chapters.add(new Collections(dataDir));
-        chapters.add(new Graphics(dataDir));
-        chapters.add(new EventHandling(dataDir));
-        chapters.add(new GUI(dataDir));
-        chapters.add(new AppDeploying(dataDir));
-        chapters.add(new Concurrency(dataDir));
+    public Volume1(Book book) {
+        super(book, 1);
+        chapters().add(new C01Introduction(this));
+        chapters().add(new C02ProgEnvironment(this));
+        chapters().add(new C03Constructs(this));
+        chapters().add(new C04ObjectsClasses(this));
+        chapters().add(new C05Inheritance(this));
+        chapters().add(new C06InterfacesInternalClasses(this));
+        chapters().add(new C07ExceptionsLogging(this));
+        chapters().add(new C08Generics(this));
+        chapters().add(new C09Collections(this));
+        chapters().add(new C10Graphics(this));
+        chapters().add(new C11EventHandling(this));
+        chapters().add(new C12GUI(this));
+        chapters().add(new C13AppDeploying(this));
+        chapters().add(new C14Concurrency(this));
     }
     
-    @Override public List<? extends Chapter> getChapters() {
-        return unmodifiableList(chapters);
+    @Override public String title() {
+        return "Volume 1: Fundamentals";
     }
     
 }
